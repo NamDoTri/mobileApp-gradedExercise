@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Ionicons } from 'react-native-vector-icons'
+import { Entypo, FontAwesome } from 'react-native-vector-icons';
 
 import HomeView from './src/components/HomeView'
 import SearchView from './src/components/SearchView'
@@ -12,31 +12,34 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-          <Tab.Navigator>
-              <Tab.Screen 
-                  name="Home"
-              >
-                  {props => <HomeView/>}
-              </Tab.Screen>
-              <Tab.Screen name="Search">
-                  {props => <SearchView/>}
-              </Tab.Screen>
-              <Tab.Screen name="Profile">
-                  {props => <ProfileView/>}
-              </Tab.Screen>
-          </Tab.Navigator>
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+			<Tab.Navigator>
+				<Tab.Screen 
+					name="Home"
+					options={{
+						tabBarIcon: ({color, size}) => (
+								<Entypo name="news" color={color} size={size}/>)
+					}}>
+						{props => <HomeView/>}
+				</Tab.Screen>
+				<Tab.Screen 
+						name="Search"
+						options={{
+							tabBarIcon: ({color, size}) => (
+								<FontAwesome name="search" color={color} size={size}/>)
+						}}>
+							{props => <SearchView/>}
+				</Tab.Screen>
+				<Tab.Screen 
+					name="Profile"
+					options={{
+						tabBarIcon: ({color, size}) => (
+							<FontAwesome name="user-o" color={color} size={size}/>)
+					}}>
+						{props => <ProfileView/>}
+				</Tab.Screen>
+			</Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    //alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
