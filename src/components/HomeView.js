@@ -13,7 +13,7 @@ const style = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#98DEE5",
-
+        fontSize: 100
     }
 });
 

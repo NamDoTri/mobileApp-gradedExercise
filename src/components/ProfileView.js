@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 
 const ProfileView = () => {
     return (
-        <View>
+        <View style={{fontSize: 100}}>
             <Text>Profile view</Text>
         </View>
     )
