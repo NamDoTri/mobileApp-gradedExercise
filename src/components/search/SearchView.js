@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 
 const SearchView = () => {
     return (
-        <View>
+        <View style={{fontSize:100}}>
             <Text>Search view</Text>
         </View>
     )
