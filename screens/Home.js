@@ -11,10 +11,18 @@ const FeedEntry = (props) => {
     return (<View style={style.itemEntryContainer}>
         <View style={style.itemEntryTopView}><Text>{`${title} FOR ${deliveryType} BY ${sellerName}`}</Text><Text>{location}</Text></View>
         <View style={style.itemEntryMiddleView}><Image source={{uri: images[0]}} style={style.itemEntryImage}></Image></View>
-        <View  style={style.itemEntryTopView}><Text>{category}</Text><Text>{`${price} euros`}</Text></View>
+        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+        <View  style={style.itemEntryTopView}><Text>{category}</Text></View>
         <View  style={style.itemEntryTopView}><Text>{description}</Text></View>
         <View style={style.itemEntryMiddleView2}><Text>{datePosted}</Text></View>
+        </View>
+        <View style={{display: 'flex', flexDirection: 'column'}}>
+        <View><Text style={style.priceText}>{`${price} euros`}</Text></View>
         <View style={style.itemEntryBottomView}><Button title={'Buy'}></Button></View>
+        </View>
+        </View>
+       
     </View>)
 }
 
@@ -78,6 +86,10 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
+    priceText: {
+        fontSize: 24,
+        fontWeight: "bold"
+    }
 });
 
 export default HomeView
