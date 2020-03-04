@@ -9,19 +9,18 @@ const SearchView = props => {
     
     const handleSubmit = (type, keyword) => {
         let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
-        
+
         fetch(searchUri)
-        .then(res => {
-            return res.json();
-        })
-        .then(json => {
-            setItems(json)
-        })
-        .catch(e => console.log(e))
+            .then(res => {
+                return res.json();
+            })
+            .then(json => {
+                setItems(json)
+                console.log(json)
+            })
+            .catch(e => console.log(e))
     }
-    // useEffect( () => {
-    //     console.log(items)
-    // }, [items]);
+
     return (
         <View style={styles.container}>
             <Text>Search view</Text>
@@ -49,6 +48,8 @@ const styles = StyleSheet.create({
         backgroundColor: "gray"
     },
     searchResult: {
-        flex: 8
+        flex: 8,
+        color: "black",
+        fontSize: 100
     }
 })
