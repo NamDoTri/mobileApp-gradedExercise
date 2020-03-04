@@ -18,7 +18,7 @@ const FeedEntry = (props) => {
         <View style={style.itemEntryMiddleView2}><Text>{datePosted}</Text></View>
         </View>
         <View style={{display: 'flex', flexDirection: 'column'}}>
-        <View><Text style={style.priceText}>{`${price} euros`}</Text></View>
+        <View><Text style={style.priceText}>{`${price ? price + 'euros': ''}`}</Text></View>
         <View style={style.itemEntryBottomView}><Button title={'Buy'} style={style.buyButton}></Button></View>
         </View>
         </View>
