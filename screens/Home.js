@@ -19,7 +19,7 @@ const FeedEntry = (props) => {
         </View>
         <View style={{display: 'flex', flexDirection: 'column'}}>
         <View><Text style={style.priceText}>{`${price} euros`}</Text></View>
-        <View style={style.itemEntryBottomView}><Button title={'Buy'}></Button></View>
+        <View style={style.itemEntryBottomView}><Button title={'Buy'} style={style.buyButton}></Button></View>
         </View>
         </View>
        
@@ -58,19 +58,21 @@ const HomeView = () => {
 
 const style = StyleSheet.create({
     container: {
+        
         flex: 1,
         padding: '2%',
-        backgroundColor: "#98DEE5",
-        fontSize: 100
+        backgroundColor: "#d9d9d9"
     },
     itemEntryContainer: {
         flexDirection: 'column'
     },
     itemEntryTopView: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        fontSize: 20,
     },
     itemEntryBottomView: {
+        padding: 10,
         flexDirection: 'row-reverse',
         justifyContent: 'space-between'
     },
@@ -80,7 +82,7 @@ const style = StyleSheet.create({
     itemEntryImage: {
         width: '100%',
         height: 300,
-        backgroundColor: 'yellow'
+        backgroundColor: 'white'
     },
     itemEntryMiddleView2: {
         flexDirection: 'row',
@@ -89,6 +91,11 @@ const style = StyleSheet.create({
     priceText: {
         fontSize: 24,
         fontWeight: "bold"
+    },
+    buyButton: {
+        backgroundColor: 'blue',
+        color: 'white',
+        fontSize: 20
     }
 });
 
