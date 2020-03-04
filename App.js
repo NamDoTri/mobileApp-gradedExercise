@@ -9,6 +9,7 @@ import SearchView from './src/components/search/SearchView'
 import ProfileView from './src/components/user/ProfileView'
 
 const Tab = createBottomTabNavigator();
+const baseUri = "http://18.195.169.254:3008";
 
 export default function App() {
   return (
@@ -30,7 +31,9 @@ export default function App() {
 							<FontAwesome name="search" color={color} size={size}/>
 						)
 					}}>
-						{props => <SearchView/>}
+						{props => <SearchView
+							baseUri={baseUri}
+						/>}
 				</Tab.Screen>
 				<Tab.Screen 
 					name="Profile"
