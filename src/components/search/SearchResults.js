@@ -4,7 +4,12 @@ import { View, Text } from 'react-native'
 const SearchResults = props => {
     return (
         <View style={props.style}>
-            <Text>Show Search results</Text>
+            { (props.items && props.items.length == 0) ? 
+                <Text>No items found</Text> :
+                props.items.forEach(item => {
+                    <Text>{item.title}</Text>
+                })
+            }
         </View>
     )
 }

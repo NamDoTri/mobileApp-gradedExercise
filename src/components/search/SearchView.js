@@ -1,18 +1,27 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 import SearchBox from './SearchBox'
 import SearchResults from './SearchResults'
 
 const SearchView = props => {
+    const [items, setItems] = useState([])
     
     const handleSubmit = (type, keyword) => {
         let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
-        // console.log(searchUri);
+        
         fetch(searchUri)
-        .then(res => console.log( typeof res ))
+        .then(res => {
+            return res.json();
+        })
+        .then(json => {
+            setItems(json)
+        })
         .catch(e => console.log(e))
     }
+    // useEffect( () => {
+    //     console.log(items)
+    // }, [items]);
     return (
         <View style={styles.container}>
             <Text>Search view</Text>
@@ -20,7 +29,10 @@ const SearchView = props => {
                 style={styles.SearchBox}
                 handleSubmit={handleSubmit}
             />
-            <SearchResults style={styles.SearchResults} />
+            <SearchResults 
+                style={styles.SearchResults} 
+                items={items}
+            />
         </View>
     )
 }
