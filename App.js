@@ -10,6 +10,8 @@ import ProfileView from './src/components/user/ProfileView'
 
 const Tab = createBottomTabNavigator();
 
+//alksjh flkawh ioawhu9 some test comments
+
 export default function App() {
   return (
     <NavigationContainer>
