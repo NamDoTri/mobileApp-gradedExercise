@@ -43,7 +43,7 @@ const HomeView = () => {
     }, [])
     return (
         <ScrollView style={style.container}>
-            {items.map(item => <FeedEntry data={item}></FeedEntry>)}
+            {items.map(item => <FeedEntry key={item._id} data={item}></FeedEntry>)}
         </ScrollView>
     )
 }
