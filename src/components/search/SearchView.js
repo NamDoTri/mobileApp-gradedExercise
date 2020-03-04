@@ -4,9 +4,17 @@ import { View, Text, StyleSheet } from 'react-native'
 import SearchBox from './SearchBox'
 import SearchResults from './SearchResults'
 
-const SearchView = () => {
+const SearchView = props => {
+    
+    const handleSubmit = (type, keyword) => {
+        let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
+        // console.log(searchUri);
+        fetch(searchUri)
+        .then(res => console.log( typeof res ))
+        .catch(e => console.log(e))
+    }
     return (
-        <View style={{fontSize:100}}>
+        <View style={styles.container}>
             <Text>Search view</Text>
             <SearchBox 
                 style={styles.SearchBox}
@@ -17,15 +25,12 @@ const SearchView = () => {
     )
 }
 
-const handleSubmit = (type, keyword) => {
-    console.log(type, keyword)
-}
 
 export default SearchView
 
 const styles = StyleSheet.create({
     container:{
-
+        paddingTop: 25,
     },
     searchBox: {
         flex: 2,
