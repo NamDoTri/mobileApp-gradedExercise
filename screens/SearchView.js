@@ -23,13 +23,13 @@ const SearchView = props => {
 
     return (
         <View style={styles.container}>
-            <Text>Search view</Text>
+            <Text style={styles.header}>Search</Text>
             <SearchBox 
-                style={styles.SearchBox}
+                styling={styles.searchBox}
                 handleSubmit={handleSubmit}
             />
             <SearchResults 
-                style={styles.SearchResults} 
+                style={styles.searchResults} 
                 items={items}
             />
         </View>
@@ -42,10 +42,21 @@ export default SearchView
 const styles = StyleSheet.create({
     container:{
         paddingTop: 25,
+        paddingLeft: 10
+    },
+    header: {
+        justifyContent: "center",
+        fontSize: 35,
+        fontWeight: "bold"
     },
     searchBox: {
         flex: 2,
-        backgroundColor: "gray"
+        backgroundColor: "#D1EDEE",
+        height: 120,
+        paddingTop: 20,
+        fontSize: 20,
+        placeholderColor: "#E5943B"
+        // underlineColorAndroid: "#085B91"
     },
     searchResult: {
         flex: 8,
