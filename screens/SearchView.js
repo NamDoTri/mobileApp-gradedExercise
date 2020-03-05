@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-import SearchBox from './SearchBox'
-import SearchResults from './SearchResults'
+import SearchBox from '../components/search/SearchBox'
+import SearchResults from '../components/search/SearchResults'
 
 const SearchView = props => {
     const [items, setItems] = useState([])
