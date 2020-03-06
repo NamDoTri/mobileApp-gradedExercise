@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         height: 120,
         paddingTop: 20,
         fontSize: 20,
-        placeholderColor: "#E5943B"
+        //placeholderColor: "#E5943B"
         // underlineColorAndroid: "#085B91"
     },
     searchResult: {
