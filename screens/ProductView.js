@@ -6,7 +6,7 @@ const ProductView = props => {
 
     return (
         <View>
-            <Text>{item.title}</Text>
+            <Text>This is product detail view</Text>
         </View>
     )
 }

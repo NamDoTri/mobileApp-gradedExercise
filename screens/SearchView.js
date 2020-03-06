@@ -1,8 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from 'react-native'
 
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
+import ProductView from '../screens/ProductView'
+
+const Stack = createStackNavigator();
 
 const SearchView = props => {
     const [items, setItems] = useState([])
@@ -28,14 +33,31 @@ const SearchView = props => {
                 styling={styles.searchBox}
                 handleSubmit={handleSubmit}
             />
-            <SearchResults 
-                style={styles.searchResults} 
-                items={items}
-            />
+            <Stack.Navigator
+                initialRouteName="SearchResults"
+            >
+                <Stack.Screen 
+                    name="SearchResult">
+                    {() => (
+                        <SearchResults 
+                            style={styles.searchResults} 
+                            items={items}
+                        />
+                    )}
+                </Stack.Screen>
+                <Stack.Screen
+                    name="ProductDetail"
+                    component={ProductView}
+                />
+            </Stack.Navigator>
         </View>
     )
 }
 
+{/* <SearchResults 
+                style={styles.searchResults} 
+                items={items}
+            /> */}
 
 export default SearchView
 

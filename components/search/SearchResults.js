@@ -3,6 +3,9 @@ import { View, Text, FlatList } from 'react-native'
 import ProductCompact from './ProductCompact'
 
 const SearchResults = props => {
+    const showDetails = item => {
+        props.navigation.navigate("ProductDetail", {item})
+    }
     return (
         <FlatList 
             style={props.style}
@@ -11,6 +14,7 @@ const SearchResults = props => {
                 ({item}) => (
                     <ProductCompact
                         item={item}
+                        onPress={() => showDetails(item)}
                     />
                 )
             }
@@ -20,13 +24,3 @@ const SearchResults = props => {
 }
 
 export default SearchResults
-
-
-// {(props.items && props.items.length == 0) ? 
-//     <Text>No items found</Text> :
-//     props.items.map( item => (
-//         <ProductCompact
-//             item={item}
-//         />) 
-//     )
-// }

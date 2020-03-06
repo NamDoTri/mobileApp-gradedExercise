@@ -9,7 +9,6 @@ const SearchBox = props => {
             <TextInput
                 onSubmitEditing={(e) => props.handleSubmit(type, e.nativeEvent.text)}
                 placeholder="Search..."
-                style={props.styling}
             />
         </View>
     )
