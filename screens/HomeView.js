@@ -4,9 +4,11 @@ const url = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008/i
 import axios from 'axios';
 import Product from "../components/search/Product";
 
+
 const HomeView = () => {
 
     const [items, setItems] = useState([]);
+    const [error, setError] = useState(null);
 
     const loadItems = async () => {
 
@@ -19,6 +21,7 @@ const HomeView = () => {
             setItems(its.data.items);
         }
         catch(err){
+            setError(err);
             console.log("Error in loading items", err);
         }
     }
@@ -26,9 +29,11 @@ const HomeView = () => {
         loadItems();
     }, [])
     return (
-        <ScrollView style={style.container}>
+        <React.Fragment>
+        {error? <Text>Failed to connect to the server</Text>:  <ScrollView style={style.container}>
             {items.map(item => <Product key={item._id} data={item}></Product>)}
-        </ScrollView>
+        </ScrollView>}
+        </React.Fragment>
     )
 }
 
