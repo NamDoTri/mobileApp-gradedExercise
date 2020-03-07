@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import ProductCompact from './ProductCompact'
 
 const SearchResults = props => {
     const showDetails = item => {
-        console.log(props.navigation)
         props.navigation.navigate("ProductDetail", {item: item})
     }
-    return (
+
+    return (props.items && props.items.length == 0) ?
+    (<Text
+        style={{
+            fontSize: 20,
+            paddingLeft: 10,
+            paddingTop: 10
+        }}
+    >
+        No items found
+    </Text>) :
+    (
         <FlatList 
             style={props.style}
             data={props.items}

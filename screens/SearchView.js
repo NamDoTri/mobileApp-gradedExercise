@@ -3,57 +3,66 @@ import { View, Text, StyleSheet } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import SearchBox from '../components/search/SearchBox'
-import SearchResults from '../components/search/SearchResults'
+import SearchTypeTab from '../components/search/SearchTypeTab'
 import ProductView from '../screens/ProductView'
 
 const Stack = createStackNavigator();
 
 const SearchView = props => {
-    const [items, setItems] = useState([])
+    const [categoryItems, setCategoryItems] = useState([]);
+    const [locationItems, setLocationItems] = useState([]);
+    const [dateItems, setDateItems] = useState([]);
+    const [keyword, setKeyword] = useState("");
+    const searchTypes = ["Category", "Location", "Date"]
     
-    const handleSubmit = (type, keyword) => {
-        let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
-
-        fetch(searchUri)
-            .then(res => {
-                return res.json();
-            })
-            .then(json => {
-                setItems(json)
-            })
-            .catch(e => console.log(e))
-    }
+    useEffect(() => {
+        for (let type of searchTypes){
+            let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
+            console.log("Url: " + searchUri)
+            fetch(searchUri)
+                .then(res => {
+                    return res.json();
+                })
+                .then(json => {
+                    console.log(json)
+                    eval(`set${type}Items(json)`);
+                })
+                .catch(e => console.log("SearchView: " + e))
+        }
+    }, [keyword])
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Search</Text>
-            <SearchBox 
-                styling={styles.searchBox}
-                handleSubmit={handleSubmit}
-            />
-            <View style={styles.searchResults}>
-                <Stack.Navigator
-                    screenOptions={{
-                        headerShown: false
-                    }} 
+            <Stack.Navigator
+                screenOptions={{
+                    headerShown: false
+                }} 
+            >
+                <Stack.Screen 
+                    name="SearchResult"
                 >
-                    <Stack.Screen 
-                        name="SearchResult"
-                    >
-                        {props => (
-                            <SearchResults 
-                                {...props}
-                                style={styles.searchResults} 
-                                items={items}
-                            />
-                        )}
-                    </Stack.Screen>
-                    <Stack.Screen
-                        name="ProductDetail"
-                        component={ProductView}
-                    />
-                </Stack.Navigator>
-            </View>
+                    {props => (
+                        <>
+                        <Text style={styles.header}>Search</Text>
+                        <SearchBox
+                            {...props}
+                            styling={styles.searchBox}
+                            handleSubmit={setKeyword}
+                        />
+                        <SearchTypeTab
+                            {...props}
+                            itemsByCategory={categoryItems}
+                            itemsByLocation={locationItems}
+                            itemsByDate={dateItems}
+                        />
+                        </>
+                    )}
+                </Stack.Screen>
+                <Stack.Screen
+                    name="ProductDetail"
+                    component={ProductView}
+                />
+            </Stack.Navigator>
         </View>
     )
 }
@@ -78,8 +87,6 @@ const styles = StyleSheet.create({
         height: 120,
         paddingTop: 20,
         fontSize: 20,
-        //placeholderColor: "#E5943B"
-        // underlineColorAndroid: "#085B91"
     },
     searchResults: {
         flex: 8
