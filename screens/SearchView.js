@@ -26,34 +26,35 @@ const SearchView = props => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Search</Text>
-            <SearchBox 
-                styling={styles.searchBox}
-                handleSubmit={handleSubmit}
-            />
-            <View style={styles.searchResults}>
-                <Stack.Navigator
-                    screenOptions={{
-                        headerShown: false
-                    }} 
+            <Stack.Navigator
+                screenOptions={{
+                    headerShown: false
+                }} 
+            >
+                <Stack.Screen 
+                    name="SearchResult"
                 >
-                    <Stack.Screen 
-                        name="SearchResult"
-                    >
-                        {props => (
-                            <SearchResults 
-                                {...props}
-                                style={styles.searchResults} 
-                                items={items}
-                            />
-                        )}
-                    </Stack.Screen>
-                    <Stack.Screen
-                        name="ProductDetail"
-                        component={ProductView}
-                    />
-                </Stack.Navigator>
-            </View>
+                    {props => (
+                        <>
+                        <Text style={styles.header}>Search</Text>
+                        <SearchBox
+                            {...props}
+                            styling={styles.searchBox}
+                            handleSubmit={handleSubmit}
+                        />
+                        <SearchResults 
+                            {...props}
+                            style={styles.searchResults} 
+                            items={items}
+                        />
+                        </>
+                    )}
+                </Stack.Screen>
+                <Stack.Screen
+                    name="ProductDetail"
+                    component={ProductView}
+                />
+            </Stack.Navigator>
         </View>
     )
 }
