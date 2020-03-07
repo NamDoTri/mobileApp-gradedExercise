@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 const CustomHeader =  (props) => {
 
-    return (<View style={style.container}><Text style={style.title}>{props.title}</Text></View>)
+    return (<View style={{...style.container, backgroundColor: props.backgroundColor? props.backgroundColor: '#fff'}}><Text style={style.title}>{props.title}</Text></View>)
 }
 
 

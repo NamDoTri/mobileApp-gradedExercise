@@ -5,7 +5,7 @@ import CustomHeader from "../components/CustomHeader";
 const ProfileView = () => {
     return (
         <React.Fragment>
-            <CustomHeader title='Profile'/>
+            <CustomHeader title='Profile' backgroundColor="#d9d9d9"/>
             <View style={styles.container}>
             <Text>Profile view</Text>
             </View>
@@ -16,7 +16,7 @@ const ProfileView = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: '2%',
+        padding: '2%',
         backgroundColor: "#d9d9d9",
     }
 });

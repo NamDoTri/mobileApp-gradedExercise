@@ -33,7 +33,7 @@ const HomeView = () => {
 
     return (
         <React.Fragment>
-            <CustomHeader title='Home'/>
+            <CustomHeader title='Home' backgroundColor="#d9d9d9"/>
             <View style={style.container}>
         {error? <Text>Failed to connect to the server</Text>:  <ScrollView >
             {items.map(item => <Product key={item._id} data={item}></Product>)}
