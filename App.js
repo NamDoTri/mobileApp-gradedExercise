@@ -21,7 +21,8 @@ export default function App() {
 					options={{
 						tabBarIcon: ({color, size}) => (
 							<Entypo name="news" color={color} size={size}/>
-						)
+						),
+						title: 'Home'
 					}}>
 						{props => <HomeView/>}
 				</Tab.Screen>
