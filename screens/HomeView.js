@@ -9,7 +9,7 @@ import axios from 'axios';
 const FeedEntry = (props) => {
     const {category, datePosted, deliveryType, description, images, location, price, sellerName, title, _id} = props.data;
     return (<View style={style.itemEntryContainer}>
-        <View style={style.itemEntryTopView}><Text>{`${title} FOR ${deliveryType} BY ${sellerName}`}</Text><Text>{location}</Text></View>
+        <View style={style.itemEntryTopView}><View style={style.titleTextsView}><Text>{`${title}`}</Text><Text>{` FOR `}</Text><Text>{`${deliveryType}`}</Text><Text>{` BY `}</Text><Text>{`${sellerName}`}</Text></View><Text>{location}</Text></View>
         <View style={style.itemEntryMiddleView}><Image source={{uri: images[0]}} style={style.itemEntryImage}></Image></View>
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
@@ -60,7 +60,8 @@ const style = StyleSheet.create({
     container: {
         flex: 1,
         padding: '2%',
-        backgroundColor: "#d9d9d9"
+        backgroundColor: "#d9d9d9",
+        fontSize: 30
     },
     itemEntryContainer: {
         flexDirection: 'column'
@@ -68,6 +69,10 @@ const style = StyleSheet.create({
     itemEntryTopView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+    },
+    titleTextsView: {
+        flexDirection: 'row',
+        width: '70%'
     },
     itemEntryBottomView: {
         padding: 10,
