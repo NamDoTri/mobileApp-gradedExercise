@@ -1,10 +1,11 @@
 import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import ProductCompact from './ProductCompact'
 
 const SearchResults = props => {
     const showDetails = item => {
-        props.navigation.navigate("ProductDetail", {item})
+        console.log(props.navigation)
+        props.navigation.navigate("ProductDetail", {item: item})
     }
     return (
         <FlatList 
@@ -12,10 +13,13 @@ const SearchResults = props => {
             data={props.items}
             renderItem={
                 ({item}) => (
-                    <ProductCompact
-                        item={item}
+                    <TouchableOpacity
                         onPress={() => showDetails(item)}
-                    />
+                    >
+                        <ProductCompact
+                            item={item}
+                        />
+                    </TouchableOpacity>
                 )
             }
             keyExtractor={item => item._id}
