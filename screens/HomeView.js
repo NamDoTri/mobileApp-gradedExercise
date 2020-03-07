@@ -16,10 +16,10 @@ const FeedEntry = (props) => {
         <View style={style.itemEntryTopView}>
             <View style={style.titleTextsView}>
                 <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${title}`}</Text>
-                <Text style={{fontSize: 20}}>{` FOR `}</Text>
-                <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${deliveryType}`}</Text>
-                <Text style={{fontSize: 20}}>{` BY `}</Text>
-                <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${sellerName}`}</Text>
+                <Text style={{fontSize: 20}}>{deliveryType ? ` FOR `: ''}</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${deliveryType? deliveryType: ''}`}</Text>
+                <Text style={{fontSize: 20}}>{sellerName? ` BY `: ''}</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${sellerName?sellerName: ''}`}</Text>
             </View>
         </View>
         <View  style={style.itemEntryTopView}>
