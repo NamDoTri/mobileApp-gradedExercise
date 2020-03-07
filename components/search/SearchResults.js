@@ -7,11 +7,17 @@ const SearchResults = props => {
         props.navigation.navigate("ProductDetail", {item: item})
     }
 
-    useEffect(() => {
-        console.log("Search results" + props.items)
-    }, )
-
-    return (
+    return (props.items && props.items.length == 0) ?
+    (<Text
+        style={{
+            fontSize: 20,
+            paddingLeft: 10,
+            paddingTop: 10
+        }}
+    >
+        No items found
+    </Text>) :
+    (
         <FlatList 
             style={props.style}
             data={props.items}

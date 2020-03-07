@@ -49,6 +49,7 @@ const SearchView = props => {
                             handleSubmit={setKeyword}
                         />
                         <SearchTypeTab
+                            {...props}
                             itemsByCategory={categoryItems}
                             itemsByLocation={locationItems}
                             itemsByDate={dateItems}
