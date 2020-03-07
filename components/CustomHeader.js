@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-export default (props) => {
+const CustomHeader =  (props) => {
 
     return (<View style={style.container}><Text style={style.title}>{props.title}</Text></View>)
 }
@@ -21,3 +21,5 @@ const style = StyleSheet.create({
     fontWeight: "bold"
    }
 });
+
+export default CustomHeader;

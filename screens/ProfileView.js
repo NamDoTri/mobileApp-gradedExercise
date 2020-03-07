@@ -1,12 +1,23 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native';
+import CustomHeader from "../components/CustomHeader";
 
 const ProfileView = () => {
     return (
-        <View style={{fontSize: 100}}>
+        <React.Fragment>
+            <CustomHeader title='Profile'/>
+            <View style={styles.container}>
             <Text>Profile view</Text>
-        </View>
+            </View>
+        </React.Fragment>
     )
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: '2%',
+        backgroundColor: "#d9d9d9",
+    }
+});
 export default ProfileView

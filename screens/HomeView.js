@@ -34,9 +34,11 @@ const HomeView = () => {
     return (
         <React.Fragment>
             <CustomHeader title='Home'/>
-        {error? <Text>Failed to connect to the server</Text>:  <ScrollView style={style.container}>
+            <View style={style.container}>
+        {error? <Text>Failed to connect to the server</Text>:  <ScrollView >
             {items.map(item => <Product key={item._id} data={item}></Product>)}
         </ScrollView>}
+        </View>
         </React.Fragment>
     )
 }
@@ -44,7 +46,7 @@ const HomeView = () => {
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: '2%',
+        padding: '2%',
         backgroundColor: "#d9d9d9",
         fontSize: 30
     },

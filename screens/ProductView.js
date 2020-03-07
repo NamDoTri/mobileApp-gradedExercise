@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text } from 'react-native';
+
 
 const ProductView = props => {
     const [item, setItem] = useState(props.item)
