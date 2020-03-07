@@ -1,6 +1,15 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import TabNavigator from "./components/TabNavigation";
+import React from 'react'
+import { StyleSheet, View, Text } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Entypo, FontAwesome } from 'react-native-vector-icons';
+
+import HomeView from './screens/HomeView'
+import SearchView from './screens/SearchView'
+import ProfileView from './screens/ProfileView'
+
+const Tab = createBottomTabNavigator();
+const baseUri = "http://18.195.169.254:3008";
 
 import HomeView from './src/components/home/HomeView'
 import SearchView from './src/components/search/SearchView'
