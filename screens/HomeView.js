@@ -1,28 +1,14 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, View, Text, Image, Button, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, Image, Button, ScrollView} from 'react-native'
 const url = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008/items";
 import axios from 'axios';
-
-
-
-
-const FeedEntry = (props) => {
-    const {category, datePosted, deliveryType, description, images, location, price, sellerName, title, _id} = props.data;
-    return (<View style={style.itemEntryContainer}>
-        <View style={style.itemEntryTopView}><Text>{`${title} FOR ${deliveryType} BY ${sellerName}`}</Text><Text>{location}</Text></View>
-        <View style={style.itemEntryMiddleView}><Image source={{uri: images[0]}} style={style.itemEntryImage}></Image></View>
-        <View  style={style.itemEntryTopView}><Text>{category}</Text><Text>{`${price} euros`}</Text></View>
-        <View  style={style.itemEntryTopView}><Text>{description}</Text></View>
-        <View style={style.itemEntryMiddleView2}><Text>{datePosted}</Text></View>
-        <View style={style.itemEntryBottomView}><Button title={'Buy'}></Button></View>
-    </View>)
-}
-
-
+import Product from "../components/search/Product";
+import CustomHeader from "../components/CustomHeader";
 
 const HomeView = () => {
 
     const [items, setItems] = useState([]);
+    const [error, setError] = useState(null);
 
     const loadItems = async () => {
 
@@ -35,16 +21,25 @@ const HomeView = () => {
             setItems(its.data.items);
         }
         catch(err){
+            setError(err);
             console.log("Error in loading items", err);
         }
     }
+
     useEffect(() => {
         loadItems();
-    }, [])
+    }, []);
+
+
     return (
-        <ScrollView style={style.container}>
-            {items.map(item => <FeedEntry data={item}></FeedEntry>)}
-        </ScrollView>
+        <React.Fragment>
+            <CustomHeader title='Home' backgroundColor="#d9d9d9"/>
+            <View style={style.container}>
+        {error? <Text>Failed to connect to the server</Text>:  <ScrollView >
+            {items.map(item => <Product key={item._id} data={item}></Product>)}
+        </ScrollView>}
+        </View>
+        </React.Fragment>
     )
 }
 
@@ -52,32 +47,10 @@ const style = StyleSheet.create({
     container: {
         flex: 1,
         padding: '2%',
-        backgroundColor: "#98DEE5",
-        fontSize: 100
+        backgroundColor: "#d9d9d9",
+        fontSize: 30
     },
-    itemEntryContainer: {
-        flexDirection: 'column'
-    },
-    itemEntryTopView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    itemEntryBottomView: {
-        flexDirection: 'row-reverse',
-        justifyContent: 'space-between'
-    },
-    itemEntryMiddleView: {
-        width: '100%'
-    },
-    itemEntryImage: {
-        width: '100%',
-        height: 300,
-        backgroundColor: 'yellow'
-    },
-    itemEntryMiddleView2: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
+   
 });
 
 export default HomeView
