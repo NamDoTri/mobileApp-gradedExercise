@@ -3,7 +3,6 @@ import { View, Text, StyleSheet } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import SearchBox from '../components/search/SearchBox'
-import SearchResults from '../components/search/SearchResults'
 import SearchTypeTab from '../components/search/SearchTypeTab'
 import ProductView from '../screens/ProductView'
 
@@ -19,14 +18,16 @@ const SearchView = props => {
     useEffect(() => {
         for (let type of searchTypes){
             let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
+            console.log("Url: " + searchUri)
             fetch(searchUri)
                 .then(res => {
                     return res.json();
                 })
                 .then(json => {
+                    console.log(json)
                     eval(`set${type}Items(json)`);
                 })
-                .catch(e => console.log(e))
+                .catch(e => console.log("SearchView: " + e))
         }
     }, [keyword])
 
@@ -86,8 +87,6 @@ const styles = StyleSheet.create({
         height: 120,
         paddingTop: 20,
         fontSize: 20,
-        //placeholderColor: "#E5943B"
-        // underlineColorAndroid: "#085B91"
     },
     searchResults: {
         flex: 8

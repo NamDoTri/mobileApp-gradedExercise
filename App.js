@@ -9,7 +9,7 @@ import SearchView from './screens/SearchView'
 import ProfileView from './screens/ProfileView'
 
 const Tab = createBottomTabNavigator();
-const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008/";
+const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008";
 
 
 export default function App() {
