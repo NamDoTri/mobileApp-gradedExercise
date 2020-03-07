@@ -9,7 +9,8 @@ import SearchView from './screens/SearchView'
 import ProfileView from './screens/ProfileView'
 
 const Tab = createBottomTabNavigator();
-const baseUri = "http://18.195.169.254:3008";
+const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008/";
+
 
 export default function App() {
   return (
@@ -20,7 +21,8 @@ export default function App() {
 					options={{
 						tabBarIcon: ({color, size}) => (
 							<Entypo name="news" color={color} size={size}/>
-						)
+						),
+						title: 'Home'
 					}}>
 						{props => <HomeView/>}
 				</Tab.Screen>
