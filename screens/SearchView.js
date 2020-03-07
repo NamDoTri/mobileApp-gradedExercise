@@ -4,25 +4,31 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
+import SearchTypeTab from '../components/search/SearchTypeTab'
 import ProductView from '../screens/ProductView'
 
 const Stack = createStackNavigator();
 
 const SearchView = props => {
-    const [items, setItems] = useState([])
+    const [categoryItems, setCategoryItems] = useState([]);
+    const [locationItems, setLocationItems] = useState([]);
+    const [dateItems, setDateItems] = useState([]);
+    const [keyword, setKeyword] = useState("");
+    const searchTypes = ["Category", "Location", "Date"]
     
-    const handleSubmit = (type, keyword) => {
-        let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
-
-        fetch(searchUri)
-            .then(res => {
-                return res.json();
-            })
-            .then(json => {
-                setItems(json)
-            })
-            .catch(e => console.log(e))
-    }
+    useEffect(() => {
+        for (let type of searchTypes){
+            let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
+            fetch(searchUri)
+                .then(res => {
+                    return res.json();
+                })
+                .then(json => {
+                    eval(`set${type}Items(json)`);
+                })
+                .catch(e => console.log(e))
+        }
+    }, [keyword])
 
     return (
         <View style={styles.container}>
@@ -40,12 +46,12 @@ const SearchView = props => {
                         <SearchBox
                             {...props}
                             styling={styles.searchBox}
-                            handleSubmit={handleSubmit}
+                            handleSubmit={setKeyword}
                         />
-                        <SearchResults 
-                            {...props}
-                            style={styles.searchResults} 
-                            items={items}
+                        <SearchTypeTab
+                            itemsByCategory={categoryItems}
+                            itemsByLocation={locationItems}
+                            itemsByDate={dateItems}
                         />
                         </>
                     )}

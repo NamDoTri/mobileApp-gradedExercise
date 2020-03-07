@@ -4,7 +4,6 @@ import ProductCompact from './ProductCompact'
 
 const SearchResults = props => {
     const showDetails = item => {
-        console.log(props.navigation)
         props.navigation.navigate("ProductDetail", {item: item})
     }
     return (
