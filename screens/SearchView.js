@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { NavigationContainer } from 'react-native'
 
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
@@ -21,7 +20,6 @@ const SearchView = props => {
             })
             .then(json => {
                 setItems(json)
-                console.log(json)
             })
             .catch(e => console.log(e))
     }
@@ -41,10 +39,10 @@ const SearchView = props => {
                 >
                     <Stack.Screen 
                         name="SearchResult"
-                         
                     >
-                        {() => (
+                        {props => (
                             <SearchResults 
+                                {...props}
                                 style={styles.searchResults} 
                                 items={items}
                             />
