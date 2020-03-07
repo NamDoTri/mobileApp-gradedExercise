@@ -9,7 +9,16 @@ import axios from 'axios';
 const FeedEntry = (props) => {
     const {category, datePosted, deliveryType, description, images, location, price, sellerName, title, _id} = props.data;
     return (<View style={style.itemEntryContainer}>
-        <View style={style.itemEntryTopView}><View style={style.titleTextsView}><Text>{`${title}`}</Text><Text>{` FOR `}</Text><Text>{`${deliveryType}`}</Text><Text>{` BY `}</Text><Text>{`${sellerName}`}</Text></View><Text>{location}</Text></View>
+        <View style={style.itemEntryTopView}>
+            <View style={style.titleTextsView}>
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${title}`}</Text>
+                <Text style={{fontSize: 20}}>{` FOR `}</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${deliveryType}`}</Text>
+                <Text style={{fontSize: 20}}>{` BY `}</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${sellerName}`}</Text>
+            </View>
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>{location}</Text>
+        </View>
         <View style={style.itemEntryMiddleView}><Image source={{uri: images[0]}} style={style.itemEntryImage}></Image></View>
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
