@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { NavigationContainer } from 'react-native'
 
 import SearchBox from '../components/search/SearchBox'
 import SearchResults from '../components/search/SearchResults'
@@ -21,7 +20,6 @@ const SearchView = props => {
             })
             .then(json => {
                 setItems(json)
-                console.log(json)
             })
             .catch(e => console.log(e))
     }
@@ -33,38 +31,41 @@ const SearchView = props => {
                 styling={styles.searchBox}
                 handleSubmit={handleSubmit}
             />
-            <Stack.Navigator
-                initialRouteName="SearchResults"
-            >
-                <Stack.Screen 
-                    name="SearchResult">
-                    {() => (
-                        <SearchResults 
-                            style={styles.searchResults} 
-                            items={items}
-                        />
-                    )}
-                </Stack.Screen>
-                <Stack.Screen
-                    name="ProductDetail"
-                    component={ProductView}
-                />
-            </Stack.Navigator>
+            <View style={styles.searchResults}>
+                <Stack.Navigator
+                    screenOptions={{
+                        headerShown: false
+                    }} 
+                >
+                    <Stack.Screen 
+                        name="SearchResult"
+                    >
+                        {props => (
+                            <SearchResults 
+                                {...props}
+                                style={styles.searchResults} 
+                                items={items}
+                            />
+                        )}
+                    </Stack.Screen>
+                    <Stack.Screen
+                        name="ProductDetail"
+                        component={ProductView}
+                    />
+                </Stack.Navigator>
+            </View>
         </View>
     )
 }
 
-{/* <SearchResults 
-                style={styles.searchResults} 
-                items={items}
-            /> */}
 
 export default SearchView
 
 const styles = StyleSheet.create({
     container:{
         paddingTop: 25,
-        paddingLeft: 10
+        paddingLeft: 10,
+        flex:1 
     },
     header: {
         justifyContent: "center",
@@ -80,9 +81,7 @@ const styles = StyleSheet.create({
         //placeholderColor: "#E5943B"
         // underlineColorAndroid: "#085B91"
     },
-    searchResult: {
-        flex: 8,
-        color: "black",
-        fontSize: 100
+    searchResults: {
+        flex: 8
     }
 })
