@@ -17,14 +17,17 @@ const FeedEntry = (props) => {
                 <Text style={{fontSize: 20}}>{` BY `}</Text>
                 <Text style={{fontWeight: 'bold', fontSize: 20}}>{`${sellerName}`}</Text>
             </View>
-            <Text style={{fontWeight: 'bold', fontSize: 20}}>{location}</Text>
+        </View>
+        <View  style={style.itemEntryTopView}>
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>{category}</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>{location}</Text>    
         </View>
         <View style={style.itemEntryMiddleView}><Image source={{uri: images[0]}} style={style.itemEntryImage}></Image></View>
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
-        <View  style={style.itemEntryTopView}><Text>{category}</Text></View>
-        <View  style={style.itemEntryTopView}><Text>{description}</Text></View>
-        <View style={style.itemEntryMiddleView2}><Text>{datePosted}</Text></View>
+        
+        <View  style={style.itemEntryTopView}><Text style={{fontSize: 16}}>{description}</Text></View>
+        <View style={style.itemEntryMiddleView2}><Text style={{fontSize: 16}}>{datePosted}</Text></View>
         </View>
         <View style={{display: 'flex', flexDirection: 'column'}}>
         <View><Text style={style.priceText}>{`${price ? price + ' euros': ''}`}</Text></View>
@@ -78,6 +81,7 @@ const style = StyleSheet.create({
     itemEntryTopView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginBottom: '2%'
     },
     titleTextsView: {
         flexDirection: 'row',
@@ -89,7 +93,8 @@ const style = StyleSheet.create({
         justifyContent: 'space-between'
     },
     itemEntryMiddleView: {
-        width: '100%'
+        width: '100%',
+        marginBottom: '2%'
     },
     itemEntryImage: {
         width: '100%',
