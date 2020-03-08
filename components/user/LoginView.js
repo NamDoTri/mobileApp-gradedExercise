@@ -6,7 +6,31 @@ const LoginView = props => {
     const [password, setPassword] = useState("")
 
     const handleLogIn = () => {
-        props.handleLogIn(email, password)
+        fetch(`${props.baseUri}/users/login`, 
+            {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body:  JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            }
+        )
+        .then(res => {
+            if(res.status == 200){
+                props.navigation.navigate("userprofile")
+                return res.json();
+            }
+            else{
+                throw new Error(JSON.stringify(res))
+            }
+        })
+        .then(json => {
+            console.log(json)
+        })
+        .catch(e => {
+            console.log("HandleLogIn: " + e)
+        })
     }
 
     return (

@@ -10,36 +10,9 @@ import UserProfile from '../components/user/UserProfile'
 const Stack = createStackNavigator();
 
 const ProfileView = props => {
+    const baseUri = props.baseUri;
     const [loginStatus, setLoginStatus] = useState(false);
     
-    const handleLogIn = (email, password) => {
-        fetch(`${props.baseUri}/users/login`, 
-            {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body:  JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            }
-        )
-        .then(res => {
-            if(res.status == 200){
-                setLoginStatus(true)
-                return res.json();
-            }
-            else{
-                throw new Error(JSON.stringify(res))
-            }
-        })
-        .then(json => {
-            console.log(json)
-        })
-        .catch(e => {
-            console.log("HandleLogIn: " + e)
-        })
-    }
-
     return (
         <React.Fragment>
             <CustomHeader title='Profile' backgroundColor="#d9d9d9"/>
@@ -53,7 +26,7 @@ const ProfileView = props => {
                         {props => (
                             <LoginView
                                 {...props}
-                                handleLogIn={handleLogIn}
+                                baseUri={baseUri}
                             />
                         )}
                     </Stack.Screen>
@@ -61,6 +34,7 @@ const ProfileView = props => {
                         {props => (
                             <RegisterView
                                 {...props}
+                                baseUri={baseUri}
                             />
                         )}
                     </Stack.Screen>
