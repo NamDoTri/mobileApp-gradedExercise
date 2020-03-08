@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, Text, TextInput, Button } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native'
 
 const LoginView = props => {
     const [email, setEmail] = useState("")
@@ -25,6 +25,14 @@ const LoginView = props => {
                 title="Log in"
                 onPress={handleLogIn}
             />
+            <View>
+                <Text>Not a member yet?</Text>
+                <TouchableOpacity
+                    onPress={() => {props.navigation.navigate("register")}}
+                >
+                    <Text style={{color: "blue"}}>Register</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }

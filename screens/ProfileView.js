@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import CustomHeader from "../components/CustomHeader";
+import { createStackNavigator } from '@react-navigation/stack'
 
 import LoginView from '../components/user/LoginView'
 import RegisterView from '../components/user/RegisterView'
 import UserProfile from '../components/user/UserProfile'
 
-const ProfileView = props => {
-    const [authStatus, setAuthStatus] = useState("login");
-    let output;
+const Stack = createStackNavigator();
 
+const ProfileView = props => {
+    const [loginStatus, setLoginStatus] = useState(false);
     
     const handleLogIn = (email, password) => {
-        console.log(props.baseUri)
         fetch(`${props.baseUri}/users/login`, 
             {
                 method: "POST",
@@ -25,6 +25,7 @@ const ProfileView = props => {
         )
         .then(res => {
             if(res.status == 200){
+                setLoginStatus(true)
                 return res.json();
             }
             else{
@@ -39,25 +40,36 @@ const ProfileView = props => {
         })
     }
 
-    switch(authStatus){
-        case "register":
-            output = <RegisterView/>
-            break;
-        case "login": 
-            output = <LoginView
-                        handleLogIn={handleLogIn}
-                    />
-            break;
-        case "profileView": 
-            output = <UserProfile/>
-            break;
-    }
-
     return (
         <React.Fragment>
             <CustomHeader title='Profile' backgroundColor="#d9d9d9"/>
             <View style={styles.container}>
-                {output}
+                <Stack.Navigator
+                    screenOptions={{
+                        headerShown: false
+                    }}
+                >
+                    <Stack.Screen name="login">
+                        {props => (
+                            <LoginView
+                                {...props}
+                                handleLogIn={handleLogIn}
+                            />
+                        )}
+                    </Stack.Screen>
+                    <Stack.Screen name="register">
+                        {props => (
+                            <RegisterView
+                                {...props}
+                            />
+                        )}
+                    </Stack.Screen>
+                    <Stack.Screen name="userprofile">
+                        {props => (
+                            <UserProfile/>
+                        )}
+                    </Stack.Screen>
+                </Stack.Navigator>
             </View>
         </React.Fragment>
     )
