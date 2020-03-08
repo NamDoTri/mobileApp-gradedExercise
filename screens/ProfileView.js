@@ -40,7 +40,9 @@ const ProfileView = props => {
                     </Stack.Screen>
                     <Stack.Screen name="userprofile">
                         {props => (
-                            <UserProfile/>
+                            <UserProfile
+                                {...props}
+                            />
                         )}
                     </Stack.Screen>
                 </Stack.Navigator>

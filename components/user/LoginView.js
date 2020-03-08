@@ -18,7 +18,7 @@ const LoginView = props => {
         )
         .then(res => {
             if(res.status == 200){
-                props.navigation.navigate("userprofile")
+                props.navigation.replace("userprofile")
                 return res.json();
             }
             else{

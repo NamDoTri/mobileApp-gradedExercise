@@ -20,7 +20,7 @@ const RegisterView = props => {
         )
         .then(res => {
             if(res.status == 202){
-                props.navigation.navigate("userprofile")
+                props.navigation.replace("userprofile")
                 return res.json();
             }
             else if( res.status == 200){
