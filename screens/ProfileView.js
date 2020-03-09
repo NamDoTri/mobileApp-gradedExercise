@@ -20,15 +20,26 @@ const ProfileView = props => {
     useEffect(() => {
         SecureStore.getItemAsync(tokenName)
         .then(res => {
-            setActiveJWT(res)
-            setIsLoggedIn(true)
-            console.log("Stored JWT found.")
+            if(res != null){
+                setActiveJWT(res)
+                setIsLoggedIn(true)
+                console.log("Stored JWT found." + res)
+            }
         })
         .catch(e => {
             console.log(e)
         })
         SecureStore.setItemAsync(tokenName, activeJWT)
     }, [activeJWT])
+
+    const onLogout = () => {
+        SecureStore.deleteItemAsync(tokenName)
+        .then(res => {
+            setActiveJWT(null)
+            setIsLoggedIn(false)
+        })
+        .catch(e => console.log(e))
+    }
     
     return isLoggedIn==false ? 
     (<React.Fragment>
@@ -74,6 +85,7 @@ const ProfileView = props => {
                     {props => (
                         <UserProfile
                             {...props}
+                            onLogout={onLogout}
                         />
                     )}
                 </Stack.Screen>

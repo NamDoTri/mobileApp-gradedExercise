@@ -9,6 +9,10 @@ const UserProfile = props => {
                 title="Post an Item"
                 onPress={() => {props.navigation.navigate("postItem")}}
             />
+            <Button
+                title="Log out"
+                onPress={props.onLogout}
+            />
         </View>
     )
 }
