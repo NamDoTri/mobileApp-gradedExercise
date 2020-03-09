@@ -7,6 +7,7 @@ import { Entypo, FontAwesome } from 'react-native-vector-icons';
 import HomeView from './screens/HomeView'
 import SearchView from './screens/SearchView'
 import ProfileView from './screens/ProfileView'
+import AddItemView from "./screens/AddItemView";
 
 const Tab = createBottomTabNavigator();
 const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008";
@@ -34,6 +35,17 @@ export default function App() {
 						)
 					}}>
 						{props => <SearchView
+							baseUri={baseUri}
+						/>}
+				</Tab.Screen>
+				<Tab.Screen 
+					name="Sell"
+					options={{
+						tabBarIcon: ({color, size}) => (
+							<FontAwesome name="add" color={color} size={size}/>
+						)
+					}}>
+						{props => <AddItemView
 							baseUri={baseUri}
 						/>}
 				</Tab.Screen>
