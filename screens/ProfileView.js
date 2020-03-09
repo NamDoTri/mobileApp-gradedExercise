@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import LoginView from '../components/user/LoginView'
 import RegisterView from '../components/user/RegisterView'
 import UserProfile from '../components/user/UserProfile'
+import PostItem from '../components/user/PostItem'
 
 const Stack = createStackNavigator();
 
@@ -38,9 +39,16 @@ const ProfileView = props => {
                             />
                         )}
                     </Stack.Screen>
-                    <Stack.Screen name="userprofile">
+                    <Stack.Screen name="userProfile">
                         {props => (
                             <UserProfile
+                                {...props}
+                            />
+                        )}
+                    </Stack.Screen>
+                    <Stack.Screen name="postItem">
+                        {props => (
+                            <PostItem
                                 {...props}
                             />
                         )}

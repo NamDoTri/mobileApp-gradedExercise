@@ -5,9 +5,7 @@ import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
 
 const ProductView = props => {
     const [item, setItem] = useState(props.route.params.item)
-    useEffect(() => {
-        console.log(item)
-    })
+
     return (
         <View>
             <Image
@@ -24,7 +22,7 @@ const ProductView = props => {
                 <Text><Text style={styles.bulletPoint}>Posted by: </Text>{item.seller}</Text> 
                 <Text><Text style={styles.bulletPoint}>Location: </Text>{item.location}</Text>
                 <Text><Text style={styles.bulletPoint}>Description:</Text> {item.description}</Text>
-                <Text><Text style={styles.bulletPoint}>Posted at: </Text> {item.dateOfPosting}</Text>
+                <Text><Text style={styles.bulletPoint}>Posted at: </Text> {item.datePosted}</Text>
             </View>
         </View>
     )
