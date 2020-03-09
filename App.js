@@ -44,7 +44,9 @@ export default function App() {
 							<FontAwesome name="user-o" color={color} size={size}/>
 						)
 					}}>
-						{props => <ProfileView/>}
+						{props => <ProfileView
+							baseUri={baseUri}
+						/>}
 				</Tab.Screen>
 			</Tab.Navigator>
     </NavigationContainer>
