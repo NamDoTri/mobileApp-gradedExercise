@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import CustomHeader from "../components/CustomHeader";
 import { createStackNavigator } from '@react-navigation/stack'
+import * as SecureStore from 'expo-secure-store'
 
 import LoginView from '../components/user/LoginView'
 import RegisterView from '../components/user/RegisterView'
@@ -9,10 +10,25 @@ import UserProfile from '../components/user/UserProfile'
 import PostItem from '../components/user/PostItem'
 
 const Stack = createStackNavigator();
+const tokenName = "marketplaceAppAuth"
 
 const ProfileView = props => {
     const baseUri = props.baseUri;
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [activeJWT, setActiveJWT] = useState(null)
+
+    useEffect(() => {
+        SecureStore.getItemAsync(tokenName)
+        .then(res => {
+            setActiveJWT(res)
+            setIsLoggedIn(true)
+            console.log("Stored JWT found.")
+        })
+        .catch(e => {
+            console.log(e)
+        })
+        SecureStore.setItemAsync(tokenName, activeJWT)
+    }, [activeJWT])
     
     return isLoggedIn==false ? 
     (<React.Fragment>
@@ -29,6 +45,7 @@ const ProfileView = props => {
                             {...props}
                             baseUri={baseUri}
                             setIsLoggedIn={setIsLoggedIn}
+                            setActiveJWT={setActiveJWT}
                         />
                     )}
                 </Stack.Screen>
@@ -38,6 +55,7 @@ const ProfileView = props => {
                             {...props}
                             baseUri={baseUri}
                             setIsLoggedIn={setIsLoggedIn}
+                            setActiveJWT={setActiveJWT}
                         />
                     )}
                 </Stack.Screen>

@@ -26,6 +26,7 @@ const LoginView = props => {
             }
         })
         .then(json => {
+            props.setActiveJWT(json.token)
             console.log(json)
         })
         .catch(e => {
