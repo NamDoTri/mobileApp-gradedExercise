@@ -27,7 +27,8 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.2.2",
-    "react-navigation-tabs": "^2.8.2"
+    "react-navigation-tabs": "^2.8.2",
+    "expo-secure-store": "~8.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",
