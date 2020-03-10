@@ -4,12 +4,12 @@ import CustomHeader from "../components/CustomHeader";
 
 const AddItemView = (props) => {
     return (
-        <View>
-            <CustomHeader title='Home' backgroundColor="#d9d9d9"/>
+        <React.Fragment>
+            <CustomHeader title='Sell' backgroundColor="#d9d9d9"/>
             <View style={style.container}>
                 <Text>Add item</Text>
             </View>
-        </View>
+        </React.Fragment>
     )
 }
 

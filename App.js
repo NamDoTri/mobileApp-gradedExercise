@@ -42,7 +42,7 @@ export default function App() {
 					name="Sell"
 					options={{
 						tabBarIcon: ({color, size}) => (
-							<FontAwesome name="add" color={color} size={size}/>
+							<FontAwesome name="search" color={color} size={size}/>
 						)
 					}}>
 						{props => <AddItemView
