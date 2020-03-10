@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView} from 'react-native';
 import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
-import ImagePicker from 'react-native-image-picker'
+import * as ImagePicker from 'expo-image-picker';
 
 const AddItemView = (props) => {
 
@@ -19,14 +19,13 @@ const AddItemView = (props) => {
         console.log("creating new item")
     }
     const handleChoosePhoto = () => {
-        const options = {
-          noData: true,
+        try{
+            const permission = await ImagePicker.requestCameraRollPermissionsAsync();
+
         }
-        ImagePicker.launchImageLibrary(options, response => {
-          if (response.uri) {
-            this.setState({ photo: response })
-          }
-        })
+        catch(err){
+            console.log(err);
+        }
       }
 
     return (
