@@ -10,7 +10,7 @@ const AddItemView = (props) => {
     const inputChangeHandler = (text, id) => {
         const nItem = {...item};
         nItem[id] = text;
-        setItem(item);
+        setItem(nItem);
         console.log(nItem);
     }
     const createNewItem = () => {
@@ -27,19 +27,19 @@ const AddItemView = (props) => {
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Description</Text>
-                <TextInput placeholder="description" ></TextInput>
+                <TextInput placeholder="description" onChangeText={(text) => {inputChangeHandler(text, "description")}}></TextInput>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Category</Text>
-                <TextInput placeholder="category for the item" ></TextInput>
+                <TextInput placeholder="category for the item" onChangeText={(text) => {inputChangeHandler(text, "category")}}></TextInput>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Type</Text>
-                    <RadioForm radio_props={[{label: 'Delivery'}, {label: 'Pickup'}]} formHorizontal={true} labelHorizontal={true} initial={0} buttonColor={'#3b3c3c'}/>
+                    <RadioForm radio_props={[{label: 'Delivery', value: 'Delivery'}, {label: 'Pickup', value: 'Pickup'}]} formHorizontal={true} labelHorizontal={true} initial={0} buttonColor={'#3b3c3c'} onPress={(value) => {console.log(value)}}/>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Location</Text>
-                <TextInput placeholder="location of the item" ></TextInput>
+                <TextInput placeholder="location of the item" onChangeText={(text) => {inputChangeHandler(text, "location")}}></TextInput>
                 </View>
                 <Button title="Submit" style={style.submitButton} onPress={createNewItem}/>
 
