@@ -46,7 +46,8 @@ const style = StyleSheet.create({
     },
     textA:{
         marginBottom: '2%',
-        color: '#3b3c3c'
+        color: '#3b3c3c',
+        fontWeight: 'bold'
         
     },
     inputA :{
@@ -56,7 +57,8 @@ const style = StyleSheet.create({
         borderRadius: 8,
         fontSize: 18,
         padding: '2%',
-        marginTop: '2%'
+        marginTop: '2%',
+        fontSize: 22
     },
     submitButton: {
 
