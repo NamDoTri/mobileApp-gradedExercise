@@ -23,6 +23,10 @@ const AddItemView = (props) => {
     const handleChoosePhoto = async () => {
         if (Constants.platform.ios) {
           const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+            return;
+          }
           let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -35,9 +39,7 @@ const AddItemView = (props) => {
           if (!result.cancelled) {
             setPhoto(result);
           }
-          if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
-          }
+         
         }
       };
 
