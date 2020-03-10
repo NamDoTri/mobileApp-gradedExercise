@@ -3,6 +3,8 @@ import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView} from 'reac
 import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
 import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
 const AddItemView = (props) => {
 
@@ -18,15 +20,28 @@ const AddItemView = (props) => {
     const createNewItem = () => {
         console.log("creating new item")
     }
-    const handleChoosePhoto = () => {
-        try{
-            const permission = await ImagePicker.requestCameraRollPermissionsAsync();
+    const handleChoosePhoto = async () => {
+        if (Constants.platform.ios) {
+          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+          });
+      
+          console.log(result);
+      
+          if (!result.cancelled) {
+            setPhoto(result);
+          }
+          if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+          }
+        }
+      };
 
-        }
-        catch(err){
-            console.log(err);
-        }
-      }
+
 
     return (
         <React.Fragment>
