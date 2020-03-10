@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, TextInput, Button} from 'react-native';
+import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView} from 'react-native';
 import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
+import ImagePicker from 'react-native-image-picker'
 
 const AddItemView = (props) => {
 
     const [item, setItem] = useState({});
+    const [photo, setPhoto] = useState();
 
     const inputChangeHandler = (text, id) => {
         const nItem = {...item};
@@ -16,11 +18,21 @@ const AddItemView = (props) => {
     const createNewItem = () => {
         console.log("creating new item")
     }
+    const handleChoosePhoto = () => {
+        const options = {
+          noData: true,
+        }
+        ImagePicker.launchImageLibrary(options, response => {
+          if (response.uri) {
+            this.setState({ photo: response })
+          }
+        })
+      }
 
     return (
         <React.Fragment>
             <CustomHeader title='Sell' backgroundColor="#d9d9d9"/>
-            <View style={style.container}>
+            <ScrollView style={style.container}>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Name</Text>
                 <TextInput placeholder="name of the item" onChangeText={(text) => {inputChangeHandler(text, "name")}}></TextInput>
@@ -41,9 +53,16 @@ const AddItemView = (props) => {
                     <Text style={style.textA}>Location</Text>
                 <TextInput placeholder="location of the item" onChangeText={(text) => {inputChangeHandler(text, "location")}}></TextInput>
                 </View>
+                <View style={style.inputA}>
+                {photo? <Image
+            source={{ uri: photo ?photo.uri : ''}}
+            style={{ width: 300, height: 300 , visibility: photo? 'visibile' : 'gone'}}
+          /> :  <Button title="Choose Photo" onPress={handleChoosePhoto} />}
+                   
+                </View>
                 <Button title="Submit" style={style.submitButton} onPress={createNewItem}/>
 
-            </View>
+            </ScrollView>
         </React.Fragment>
     )
 }
@@ -72,6 +91,9 @@ const style = StyleSheet.create({
         padding: '2%',
         marginTop: '2%',
         fontSize: 22
+    },
+    imageA: {
+
     },
     submitButton: {
         
