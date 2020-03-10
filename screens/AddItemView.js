@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, TextInput} from 'react-native';
 import CustomHeader from "../components/CustomHeader";
-import ModalDropdown from 'react-native-modal-dropdown';
 
 const AddItemView = (props) => {
     return (
@@ -22,7 +21,6 @@ const AddItemView = (props) => {
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Type</Text>
-                    <ModalDropdown options={['option 1', 'option 2']}/>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Name</Text>
