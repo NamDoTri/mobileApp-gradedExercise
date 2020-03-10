@@ -11,10 +11,22 @@ const AddItemView = (props) => {
                     <Text style={style.textA}>Name</Text>
                 <TextInput placeholder="name of the item" ></TextInput>
                 </View>
-                <TextInput placeholder="description of the item" style={style.inputA}></TextInput>
-                <TextInput placeholder="price of the item" style={style.inputA}></TextInput>
-                <TextInput placeholder="pickup or delivery" style={style.inputA}></TextInput>
-                <TextInput placeholder="location of the item" style={style.inputA}></TextInput>
+                <View style={style.inputA}>
+                    <Text style={style.textA}>Description</Text>
+                <TextInput placeholder="description" ></TextInput>
+                </View>
+                <View style={style.inputA}>
+                    <Text style={style.textA}>Category</Text>
+                <TextInput placeholder="category for the item" ></TextInput>
+                </View>
+                <View style={style.inputA}>
+                    <Text style={style.textA}>Type</Text>
+                <TextInput placeholder="name of the item" ></TextInput>
+                </View>
+                <View style={style.inputA}>
+                    <Text style={style.textA}>Name</Text>
+                <TextInput placeholder="name of the item" ></TextInput>
+                </View>
             </View>
         </React.Fragment>
     )
