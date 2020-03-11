@@ -15,6 +15,7 @@ const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:30
 
 export default function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [sellerId, setSellerId] = useState("someId")
 
 	const handleLogin = value => {
 		setIsLoggedIn(value)
@@ -54,6 +55,7 @@ export default function App() {
 						}}>
 							{props => <AddItemView
 								baseUri={baseUri}
+								sellerId={sellerId}
 							/>}
 					</Tab.Screen>) : <></>
 				}

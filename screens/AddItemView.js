@@ -8,17 +8,22 @@ import * as Permissions from 'expo-permissions';
 
 const AddItemView = (props) => {
 
-    const [item, setItem] = useState({});
+    const [item, setItem] = useState({deliveryType: "Delivery"});
     const [photo, setPhoto] = useState();
 
     const inputChangeHandler = (text, id) => {
         const nItem = {...item};
         nItem[id] = text;
         setItem(nItem);
-        console.log(nItem);
     }
     const createNewItem = () => {
-        console.log("creating new item")
+        let currentDate = new Date()
+        setItem({
+            datePosted: currentDate.toString(),
+            seller: props.sellerId,
+            ...item,
+        })
+        console.log(item)
     }
     const handleChoosePhoto = async () => {
         if (Constants.platform.ios) {
@@ -51,7 +56,7 @@ const AddItemView = (props) => {
             <ScrollView style={style.container}>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Name</Text>
-                <TextInput placeholder="name of the item" onChangeText={(text) => {inputChangeHandler(text, "name")}}></TextInput>
+                <TextInput placeholder="name of the item" onChangeText={(text) => {inputChangeHandler(text, "title")}}></TextInput>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Description</Text>
@@ -63,7 +68,7 @@ const AddItemView = (props) => {
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Type</Text>
-                    <RadioForm radio_props={[{label: 'Delivery', value: 'Delivery'}, {label: 'Pickup', value: 'Pickup'}]} formHorizontal={true} labelHorizontal={true} initial={0} buttonColor={'#3b3c3c'} onPress={(value) => {console.log(value)}}/>
+                    <RadioForm radio_props={[{label: 'Delivery', value: 'Delivery'}, {label: 'Pickup', value: 'Pickup'}]} formHorizontal={true} labelHorizontal={true} initial={0} buttonColor={'#3b3c3c'} onPress={(value) => inputChangeHandler(value, 'deliveryType')}/>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Location</Text>
