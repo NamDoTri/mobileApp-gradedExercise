@@ -22,7 +22,6 @@ const ProfileView = props => {
             if(res != null){
                 setActiveJWT(res)
                 props.setIsLoggedIn(true)
-                console.log("Stored JWT found." + res)
             }
         })
         .catch(e => {
@@ -30,6 +29,8 @@ const ProfileView = props => {
         })
         SecureStore.setItemAsync(tokenName, activeJWT)
     }, [activeJWT])
+
+    const setIsLoggedIn = value => props.setIsLoggedIn(value)
 
     const onLogout = () => {
         SecureStore.deleteItemAsync(tokenName)
@@ -54,7 +55,7 @@ const ProfileView = props => {
                         <LoginView
                             {...props}
                             baseUri={baseUri}
-                            setIsLoggedIn={props.setIsLoggedIn}
+                            setIsLoggedIn={setIsLoggedIn}
                             setActiveJWT={setActiveJWT}
                         />
                     )}
