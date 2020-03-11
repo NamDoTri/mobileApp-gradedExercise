@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -14,8 +14,10 @@ const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:30
 
 
 export default function App() {
-  return (
-    <NavigationContainer>
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	return (
+		<NavigationContainer>
 			<Tab.Navigator>
 				<Tab.Screen 
 					name="Home"
@@ -47,6 +49,7 @@ export default function App() {
 					}}>
 						{props => <AddItemView
 							baseUri={baseUri}
+							setIsLoggedIn={setIsLoggedIn}
 						/>}
 				</Tab.Screen>
 				<Tab.Screen 
@@ -61,7 +64,7 @@ export default function App() {
 						/>}
 				</Tab.Screen>
 			</Tab.Navigator>
-    </NavigationContainer>
-  );
+		</NavigationContainer>
+	);
 }
 
