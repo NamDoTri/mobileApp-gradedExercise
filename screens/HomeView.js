@@ -46,7 +46,7 @@ const HomeView = () => {
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        padding: '2%',
+        paddingTop: '2%',
         backgroundColor: "#d9d9d9",
         fontSize: 30
     },

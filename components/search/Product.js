@@ -42,17 +42,13 @@ const Product = (props) => {
 
 
 const style = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: '2%',
-        backgroundColor: "#d9d9d9",
-        fontSize: 30
-    },
+    
     itemEntryContainer: {
         flexDirection: 'column',
         backgroundColor: 'white',
-        elevation: 2,
-        padding: '2%'
+        margin: '1%',
+        padding: '1%',
+        borderRadius: 8
     },
     itemEntryTopView: {
         flexDirection: 'row',
