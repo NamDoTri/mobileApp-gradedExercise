@@ -46,6 +46,7 @@ const LoginView = props => {
         />
         <Text>Password</Text>
         <TextInput
+            secureTextEntry={true}
             value={password}
             onChange={e => setPassword(e.nativeEvent.text)}
         />
