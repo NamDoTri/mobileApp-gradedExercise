@@ -4,6 +4,7 @@ import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import axios from 'axios';
 
 const AddItemView = (props) => {
     const [item, setItem] = useState({
@@ -24,36 +25,23 @@ const AddItemView = (props) => {
         setItem(nItem);
     }
     const createNewItem = () => {
+
+        console.log("JWT", props.activeJWT);
         // metadata
-        let currentDate = new Date();
-        let toSendObject = {
+        const currentDate = Date.now();
+        const toSendObject = {
             dateOfPosting: currentDate.toString(),
             seller: props.userId,
             ...item
         }
 
-        
-
         setSubmitting(true);
         // send post request
-        fetch(`${props.baseUri}/items`, {
-            method: "post",
-            headers: {"Authorization": props.activeJWT},
-            body: toSend,
+        axios.post(`${props.baseUri}/items`, toSendObject, {
+            headers: {"Authorization": `${props.activeJWT}`, 'Content-Type': 'application/json'},
         })
         .then(res => {
-            if(res.status == 202){
-                console.log("New item uploaded successfully")
-                return res.json()
-            }
-            else{
-                return res.text()
-            }
-        })
-        .then(json => {
-            console.log("JSON: " , json)
-            setCreated(true);
-
+            console.log(res);
         })
         .catch(e => {
             setCreated(false);
