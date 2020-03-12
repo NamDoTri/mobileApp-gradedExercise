@@ -25,36 +25,20 @@ const AddItemView = (props) => {
     }
     const createNewItem = () => {
         // metadata
-        let currentDate = new Date()
+        let currentDate = new Date();
         let toSendObject = {
             dateOfPosting: currentDate.toString(),
             seller: props.userId,
             ...item
         }
 
-        // wrap everything in a FormData instance
-        let toSend = new FormData();
         
-        for (let i of Object.keys(toSendObject)){
-            toSend.append(i, toSendObject[i])
-        }
-
-        toSend.append("images", {
-            uri: photo.uri,
-            name: photo.name,
-            type: "image/jpeg"
-        })
-
-        // set Headers
-        let headers = new Headers();
-        headers.append("Content-Type", "multipart/form-data");
-        headers.append("Authorization", props.activeJWT);
 
         setSubmitting(true);
         // send post request
         fetch(`${props.baseUri}/items`, {
             method: "post",
-            headers: headers,
+            headers: {"Authorization": props.activeJWT},
             body: toSend,
         })
         .then(res => {
