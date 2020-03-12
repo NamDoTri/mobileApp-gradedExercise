@@ -5,6 +5,8 @@ import RadioForm from 'react-native-simple-radio-button';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
+import { Header } from 'react-native/Libraries/NewAppScreen';
+import axios from 'axios'
 
 const AddItemView = (props) => {
 
@@ -29,29 +31,38 @@ const AddItemView = (props) => {
         let toSendObject = {
             datePosted: currentDate.toString(),
             seller: props.sellerId,
-            images: [photo],
             ...item
         }
         for (let i of Object.keys(toSendObject)){
             toSend.append(i, toSendObject[i])
         }
-        
+        console.log(photo)
+        toSend.append("images", {
+            uri: photo.uri,
+            name: photo.name,
+            type: "image/jpeg"
+        })
+        let headers = new Headers();
+        headers.append("Content-Type", "multipart/form-data");
+        headers.append("Authorization", props.activeJWT);
         fetch(`${props.baseUri}/items`, {
             method: "post",
-            headers: {
-                "Authorization": "JWT " + props.activeJWT
-            },
-            body: JSON.stringify(toSend),
-
+            headers: headers,
+            body: toSend,
         })
         .then(res => {
             if(res.status == 202){
                 console.log("New item uploaded successfully")
-            }else{
-                console.log(res)
+                return res.json()
+            }
+            else{
+                return res.text()
             }
         })
-        .catch(e => console.log(e))
+        .then(json => [
+            console.log("JSON: " + json)
+        ])
+        .catch(e => console.log("Error: " + e))
     }
     const handleChoosePhoto = async () => {
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -75,7 +86,7 @@ const AddItemView = (props) => {
         setPhoto({
             uri: result.uri,
             name: fileName,
-            type: 'image/jpeg'
+            type: "image/jpeg"
         })
         setItem({
             images: [photo],

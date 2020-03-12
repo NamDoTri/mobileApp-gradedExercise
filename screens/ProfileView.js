@@ -21,6 +21,7 @@ const ProfileView = props => {
         .then(res => {
             if(res != null){
                 setActiveJWT(res)
+                props.setActiveJWT(res)
                 props.setIsLoggedIn(true)
             }
         })
@@ -36,6 +37,7 @@ const ProfileView = props => {
         SecureStore.deleteItemAsync(tokenName)
         .then(res => {
             setActiveJWT(null)
+            props.setActiveJWT(null)
             props.setIsLoggedIn(false)
         })
         .catch(e => console.log(e))
