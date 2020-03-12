@@ -5,6 +5,7 @@ const RegisterView = props => {
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [errors, setErrors] = useState([]);
 
     const handleRegister = () => {
         fetch(`${props.baseUri}/users/register`, 
@@ -24,7 +25,8 @@ const RegisterView = props => {
                 return res.json();
             }
             else if( res.status == 200){
-                console.log("email already registered")
+                console.log("email already registered");
+                setErrors([...errors, 'Email already registered']);
             }
             else{
                 throw new Error(JSON.stringify(res))
@@ -40,7 +42,7 @@ const RegisterView = props => {
 
     return (
         <View>
-            <Text>Email</Text>
+            {errors.length > 1 ? errors.map(error => <Text>error</Text>): <Text>Email</Text>
             <TextInput
                 value={email}
                 onChange={e => setEmail(e.nativeEvent.text)}
@@ -58,7 +60,7 @@ const RegisterView = props => {
             <Button
                 title="Register"
                 onPress={handleRegister}
-            />
+            />}
         </View>
     )
 }
