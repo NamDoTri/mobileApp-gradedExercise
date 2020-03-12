@@ -7,14 +7,7 @@ import * as Permissions from 'expo-permissions';
 import axios from 'axios';
 
 const AddItemView = (props) => {
-    const [item, setItem] = useState({
-        title: "",
-        askingPrice: "",
-        description: "",
-        category: "",
-        location: "",
-        deliveryType: 'Shipping',
-    });
+    const [item, setItem] = useState({});
     const [photo, setPhoto] = useState();
     const [submitting, setSubmitting] = useState(false);
     const [created, setCreated] = useState(false);
@@ -22,11 +15,17 @@ const AddItemView = (props) => {
     const inputChangeHandler = (text, id) => {
         const nItem = {...item};
         nItem[id] = text;
+        if(id == "askingPrice"){
+            nItem[id] = Number(text);
+        }
+        console.log(nItem);
         setItem(nItem);
     }
     const createNewItem = () => {
 
         console.log("JWT", props.activeJWT);
+        console.log("base uri", props.baseUri);
+        console.log("user id", props.userId);
         // metadata
         const currentDate = Date.now();
         const toSendObject = {
@@ -35,13 +34,14 @@ const AddItemView = (props) => {
             ...item
         }
 
+        console.log("item", toSendObject);
         setSubmitting(true);
         // send post request
         axios.post(`${props.baseUri}/items`, toSendObject, {
             headers: {"Authorization": `${props.activeJWT}`, 'Content-Type': 'application/json'},
         })
         .then(res => {
-            console.log(res);
+            console.log(res.data);
         })
         .catch(e => {
             setCreated(false);

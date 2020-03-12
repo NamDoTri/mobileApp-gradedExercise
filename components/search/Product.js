@@ -21,7 +21,7 @@ const Product = (props) => {
             <Text style={{fontWeight: 'bold', fontSize: 20}}>{category}</Text>
             <Text style={{fontWeight: 'bold', fontSize: 20}}>{location}</Text>    
         </View>
-        <View style={style.itemEntryMiddleView}><Image source={{uri: images[0]}} style={style.itemEntryImage}></Image></View>
+        <View style={style.itemEntryMiddleView}><Image source={{uri: images}} style={style.itemEntryImage}></Image></View>
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
         
