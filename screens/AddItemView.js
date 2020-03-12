@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView} from 'react-native';
 import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
@@ -8,47 +8,76 @@ import * as Permissions from 'expo-permissions';
 
 const AddItemView = (props) => {
 
-    const [item, setItem] = useState({deliveryType: "Delivery"});
+    const [item, setItem] = useState({
+        title: "",
+        askingPrice: "",
+        description: "",
+        category: "",
+        location: "",
+        deliveryType: 'Shipping',
+    });
     const [photo, setPhoto] = useState();
 
+    // useEffect(() => {
+    //     setItem({
+    //         images: [photo],
+    //         ...item
+    //     })
+    // }, [photo]);
+
     const inputChangeHandler = (text, id) => {
+        if(!item.datePosted || item.datePosted == ''){
+            let currentDate = new Date()
+            setItem({
+                datePosted: currentDate.toString(),
+                seller: props.sellerId,
+                images: [photo],
+                ...item,
+            })
+        }
         const nItem = {...item};
         nItem[id] = text;
         setItem(nItem);
     }
     const createNewItem = () => {
-        let currentDate = new Date()
-        setItem({
-            datePosted: currentDate.toString(),
-            seller: props.sellerId,
-            ...item,
-        })
-        console.log(item)
+        
+
+        let toSend = new FormData();
+        console.log(item);
+        for (let i of Object.keys(item)){
+            toSend.append(i, item[i])
+        }
+        //console.log(toSend)
     }
     const handleChoosePhoto = async () => {
-        if (Constants.platform.ios) {
-          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-          if (status !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status !== 'granted') {
             alert('Sorry, we need camera roll permissions to make this work!');
             return;
-          }
-          let result = await ImagePicker.launchImageLibraryAsync({
+        }
+        let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1
-          });
-      
-          console.log(result);
-      
-          if (!result.cancelled) {
+        });
+    
+        if (!result.cancelled) {
             setPhoto(result);
-          }
-         
+            return;
         }
-      };
 
-
+        const fileName = result.uri.split('/').slice(-1)
+        setPhoto({
+            uri: result.uri,
+            name: fileName,
+            type: 'image/jpeg'
+        })
+        setItem({
+            images: [photo],
+            ...item,
+        })
+    };
 
     return (
         <React.Fragment>
@@ -65,6 +94,10 @@ const AddItemView = (props) => {
                 <View style={style.inputA}>
                     <Text style={style.textA}>Category</Text>
                 <TextInput placeholder="category for the item" onChangeText={(text) => {inputChangeHandler(text, "category")}}></TextInput>
+                </View>
+                <View style={style.inputA}>
+                    <Text style={style.textA}>Price</Text>
+                <TextInput placeholder="price for the item" onChangeText={(text) => {inputChangeHandler(text, "askingPrice")}}></TextInput>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Type</Text>
