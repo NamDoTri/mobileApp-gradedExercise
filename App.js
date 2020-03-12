@@ -61,6 +61,21 @@ export default function App() {
 							/>}
 					</Tab.Screen>) : <></>
 				}
+				{ isLoggedIn==true ? 
+					(<Tab.Screen 
+						name="My items"
+						options={{
+							tabBarIcon: ({color, size}) => {
+								return (<FontAwesome name="euro" color={color} size={size}/>)
+							}
+						}}>
+							{props => <AddItemView
+								baseUri={baseUri}
+								userId={userId}
+								activeJWT={activeJWT}
+							/>}
+					</Tab.Screen>) : <></>
+				}
 				<Tab.Screen 
 					name="Profile"
 					options={{
