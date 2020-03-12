@@ -17,7 +17,19 @@ const SearchView = props => {
     
     useEffect(() => {
         for (let type of searchTypes){
-            let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword.toString()}`;
+            if(type == "Date"){
+                let searchDate = new Date(keyword);
+                fetch(`${props.baseUri}/items/search?type=${type}&keyword=${searchDate.toString().slice(0, 15)}`)
+                .then(res => {
+                    return res.json();
+                })
+                .then(json => {
+                    console.log(json)
+                    eval(`set${type}Items(json)`);
+                })
+                .catch(e => console.log("SearchView: " + e))
+            }
+            let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
             fetch(searchUri)
                 .then(res => {
                     return res.json();
