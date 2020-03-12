@@ -7,6 +7,7 @@ import HomeView from './screens/HomeView'
 import SearchView from './screens/SearchView'
 import ProfileView from './screens/ProfileView'
 import AddItemView from "./screens/AddItemView";
+import MyItemsView from './screens/MyItemsView';
 
 const Tab = createBottomTabNavigator();
 const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008";
@@ -69,7 +70,7 @@ export default function App() {
 								return (<FontAwesome name="euro" color={color} size={size}/>)
 							}
 						}}>
-							{props => <AddItemView
+							{props => <MyItemsView
 								baseUri={baseUri}
 								userId={userId}
 								activeJWT={activeJWT}
