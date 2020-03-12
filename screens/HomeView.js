@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, View, Text, Image, Button, ScrollView} from 'react-native'
+import { StyleSheet, View, Text, ScrollView} from 'react-native'
 const url = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008/items";
 import axios from 'axios';
 import Product from "../components/search/Product";

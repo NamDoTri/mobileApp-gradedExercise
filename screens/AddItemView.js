@@ -1,49 +1,103 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView} from 'react-native';
 import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
 import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
 const AddItemView = (props) => {
-
-    const [item, setItem] = useState({});
+    const [item, setItem] = useState({
+        title: "",
+        askingPrice: "",
+        description: "",
+        category: "",
+        location: "",
+        deliveryType: 'Shipping',
+    });
     const [photo, setPhoto] = useState();
 
     const inputChangeHandler = (text, id) => {
         const nItem = {...item};
         nItem[id] = text;
         setItem(nItem);
-        console.log(nItem);
     }
     const createNewItem = () => {
-        console.log("creating new item")
+        // metadata
+        let currentDate = new Date()
+        let toSendObject = {
+            datePosted: currentDate.toString(),
+            seller: props.userId,
+            ...item
+        }
+
+        // wrap everything in a FormData instance
+        let toSend = new FormData();
+        
+        for (let i of Object.keys(toSendObject)){
+            toSend.append(i, toSendObject[i])
+        }
+
+        toSend.append("images", {
+            uri: photo.uri,
+            name: photo.name,
+            type: "image/jpeg"
+        })
+
+        // set Headers
+        let headers = new Headers();
+        headers.append("Content-Type", "multipart/form-data");
+        headers.append("Authorization", props.activeJWT);
+
+        // send post request
+        fetch(`${props.baseUri}/items`, {
+            method: "post",
+            headers: headers,
+            body: toSend,
+        })
+        .then(res => {
+            if(res.status == 202){
+                console.log("New item uploaded successfully")
+                return res.json()
+            }
+            else{
+                return res.text()
+            }
+        })
+        .then(json => [
+            console.log("JSON: " + json)
+        ])
+        .catch(e => console.log("Error: " + e))
     }
+    
     const handleChoosePhoto = async () => {
-        if (Constants.platform.ios) {
-          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-          if (status !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status !== 'granted') {
             alert('Sorry, we need camera roll permissions to make this work!');
             return;
-          }
-          let result = await ImagePicker.launchImageLibraryAsync({
+        }
+        let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1
-          });
-      
-          console.log(result);
-      
-          if (!result.cancelled) {
+        });
+    
+        if (!result.cancelled) {
             setPhoto(result);
-          }
-         
+            return;
         }
-      };
 
-
+        const fileName = result.uri.split('/').slice(-1)
+        setPhoto({
+            uri: result.uri,
+            name: fileName,
+            type: "image/jpeg"
+        })
+        setItem({
+            images: [photo],
+            ...item,
+        })
+    };
 
     return (
         <React.Fragment>
@@ -51,7 +105,7 @@ const AddItemView = (props) => {
             <ScrollView style={style.container}>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Name</Text>
-                <TextInput placeholder="name of the item" onChangeText={(text) => {inputChangeHandler(text, "name")}}></TextInput>
+                <TextInput placeholder="name of the item" onChangeText={(text) => {inputChangeHandler(text, "title")}}></TextInput>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Description</Text>
@@ -62,8 +116,12 @@ const AddItemView = (props) => {
                 <TextInput placeholder="category for the item" onChangeText={(text) => {inputChangeHandler(text, "category")}}></TextInput>
                 </View>
                 <View style={style.inputA}>
+                    <Text style={style.textA}>Price</Text>
+                <TextInput placeholder="price for the item" onChangeText={(text) => {inputChangeHandler(text, "askingPrice")}}></TextInput>
+                </View>
+                <View style={style.inputA}>
                     <Text style={style.textA}>Type</Text>
-                    <RadioForm radio_props={[{label: 'Delivery', value: 'Delivery'}, {label: 'Pickup', value: 'Pickup'}]} formHorizontal={true} labelHorizontal={true} initial={0} buttonColor={'#3b3c3c'} onPress={(value) => {console.log(value)}}/>
+                    <RadioForm radio_props={[{label: 'Delivery', value: 'Delivery'}, {label: 'Pickup', value: 'Pickup'}]} formHorizontal={true} labelHorizontal={true} initial={0} buttonColor={'#3b3c3c'} onPress={(value) => inputChangeHandler(value, 'deliveryType')}/>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Location</Text>

@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
+import React from 'react'
+import { View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import SearchResults from './SearchResults';
 
 const Tab = createMaterialTopTabNavigator()
 
 const SearchTypeTab = props => {
-    useEffect(() => {
-        //console.log("SearchTab" + props.itemsByCategory)
-    })
     // the items are passed to here successfully
     return (
         <View style={{flex: 1}}>

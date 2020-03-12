@@ -17,7 +17,7 @@ const SearchView = props => {
     
     useEffect(() => {
         for (let type of searchTypes){
-            let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
+            let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword.toString()}`;
             fetch(searchUri)
                 .then(res => {
                     return res.json();

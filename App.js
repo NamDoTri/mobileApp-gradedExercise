@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Entypo, FontAwesome } from 'react-native-vector-icons';
@@ -15,6 +14,9 @@ const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:30
 
 export default function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [activeJWT, setActiveJWT] = useState("");
+	const [username, setUsername] = useState("");
+	const [userId, setUserId] = useState("")
 
 	const handleLogin = value => {
 		setIsLoggedIn(value)
@@ -54,6 +56,8 @@ export default function App() {
 						}}>
 							{props => <AddItemView
 								baseUri={baseUri}
+								userId={userId}
+								activeJWT={activeJWT}
 							/>}
 					</Tab.Screen>) : <></>
 				}
@@ -67,6 +71,9 @@ export default function App() {
 						{props => <ProfileView
 							baseUri={baseUri}
 							setIsLoggedIn={handleLogin}
+							setActiveJWT={setActiveJWT}
+							setUserId={setUserId}
+							setUsername={setUsername}
 						/>}
 				</Tab.Screen>
 			</Tab.Navigator>

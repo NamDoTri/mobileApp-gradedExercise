@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { Text, FlatList, TouchableOpacity } from 'react-native'
 import ProductCompact from './ProductCompact'
 
 const SearchResults = props => {
