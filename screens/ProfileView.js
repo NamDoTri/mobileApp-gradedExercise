@@ -14,7 +14,6 @@ const tokenName = "marketplaceAppAuth"
 
 const ProfileView = props => {
     const baseUri = props.baseUri;
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [activeJWT, setActiveJWT] = useState(null)
 
     useEffect(() => {
@@ -22,8 +21,7 @@ const ProfileView = props => {
         .then(res => {
             if(res != null){
                 setActiveJWT(res)
-                setIsLoggedIn(true)
-                console.log("Stored JWT found." + res)
+                props.setIsLoggedIn(true)
             }
         })
         .catch(e => {
@@ -32,16 +30,18 @@ const ProfileView = props => {
         SecureStore.setItemAsync(tokenName, activeJWT)
     }, [activeJWT])
 
+    const setIsLoggedIn = value => props.setIsLoggedIn(value)
+
     const onLogout = () => {
         SecureStore.deleteItemAsync(tokenName)
         .then(res => {
             setActiveJWT(null)
-            setIsLoggedIn(false)
+            props.setIsLoggedIn(false)
         })
         .catch(e => console.log(e))
     }
     
-    return isLoggedIn==false ? 
+    return activeJWT==null ? 
     (<React.Fragment>
         <CustomHeader title='Profile' backgroundColor="#d9d9d9"/>
         <View style={styles.container}>
@@ -65,7 +65,7 @@ const ProfileView = props => {
                         <RegisterView
                             {...props}
                             baseUri={baseUri}
-                            setIsLoggedIn={setIsLoggedIn}
+                            setIsLoggedIn={props.setIsLoggedIn}
                             setActiveJWT={setActiveJWT}
                         />
                     )}

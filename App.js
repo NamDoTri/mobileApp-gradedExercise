@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -14,8 +14,14 @@ const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:30
 
 
 export default function App() {
-  return (
-    <NavigationContainer>
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	const handleLogin = value => {
+		setIsLoggedIn(value)
+	}
+
+	return (
+		<NavigationContainer>
 			<Tab.Navigator>
 				<Tab.Screen 
 					name="Home"
@@ -38,17 +44,19 @@ export default function App() {
 							baseUri={baseUri}
 						/>}
 				</Tab.Screen>
-				<Tab.Screen 
-					name="Sell"
-					options={{
-						tabBarIcon: ({color, size}) => (
-							<FontAwesome name="search" color={color} size={size}/>
-						)
-					}}>
-						{props => <AddItemView
-							baseUri={baseUri}
-						/>}
-				</Tab.Screen>
+				{ isLoggedIn==true ? 
+					(<Tab.Screen 
+						name="Sell"
+						options={{
+							tabBarIcon: ({color, size}) => {
+								return (<FontAwesome name="euro" color={color} size={size}/>)
+							}
+						}}>
+							{props => <AddItemView
+								baseUri={baseUri}
+							/>}
+					</Tab.Screen>) : <></>
+				}
 				<Tab.Screen 
 					name="Profile"
 					options={{
@@ -58,10 +66,11 @@ export default function App() {
 					}}>
 						{props => <ProfileView
 							baseUri={baseUri}
+							setIsLoggedIn={handleLogin}
 						/>}
 				</Tab.Screen>
 			</Tab.Navigator>
-    </NavigationContainer>
-  );
+		</NavigationContainer>
+	);
 }
 
