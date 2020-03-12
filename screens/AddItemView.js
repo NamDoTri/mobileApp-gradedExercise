@@ -3,13 +3,9 @@ import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView} from 'reac
 import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
 import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { Header } from 'react-native/Libraries/NewAppScreen';
-import axios from 'axios'
 
 const AddItemView = (props) => {
-
     const [item, setItem] = useState({
         title: "",
         askingPrice: "",
@@ -26,25 +22,33 @@ const AddItemView = (props) => {
         setItem(nItem);
     }
     const createNewItem = () => {
-        let toSend = new FormData();
+        // metadata
         let currentDate = new Date()
         let toSendObject = {
             datePosted: currentDate.toString(),
             seller: props.sellerId,
             ...item
         }
+
+        // wrap everything in a FormData instance
+        let toSend = new FormData();
+        
         for (let i of Object.keys(toSendObject)){
             toSend.append(i, toSendObject[i])
         }
-        console.log(photo)
+
         toSend.append("images", {
             uri: photo.uri,
             name: photo.name,
             type: "image/jpeg"
         })
+
+        // set Headers
         let headers = new Headers();
         headers.append("Content-Type", "multipart/form-data");
         headers.append("Authorization", props.activeJWT);
+
+        // send post request
         fetch(`${props.baseUri}/items`, {
             method: "post",
             headers: headers,
@@ -64,6 +68,7 @@ const AddItemView = (props) => {
         ])
         .catch(e => console.log("Error: " + e))
     }
+    
     const handleChoosePhoto = async () => {
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
         if (status !== 'granted') {

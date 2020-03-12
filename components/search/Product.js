@@ -37,10 +37,6 @@ const Product = (props) => {
     </View>)
 }
 
-
-
-
-
 const style = StyleSheet.create({
     
     itemEntryContainer: {

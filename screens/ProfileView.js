@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import CustomHeader from "../components/CustomHeader";
 import { createStackNavigator } from '@react-navigation/stack'
 import * as SecureStore from 'expo-secure-store'
@@ -7,7 +7,6 @@ import * as SecureStore from 'expo-secure-store'
 import LoginView from '../components/user/LoginView'
 import RegisterView from '../components/user/RegisterView'
 import UserProfile from '../components/user/UserProfile'
-import PostItem from '../components/user/PostItem'
 
 const Stack = createStackNavigator();
 const tokenName = "marketplaceAppAuth"
@@ -88,13 +87,6 @@ const ProfileView = props => {
                         <UserProfile
                             {...props}
                             onLogout={onLogout}
-                        />
-                    )}
-                </Stack.Screen>
-                <Stack.Screen name="postItem">
-                    {props => (
-                        <PostItem
-                            {...props}
                         />
                     )}
                 </Stack.Screen>
