@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import CustomHeader from '../components/CustomHeader';
+import axios from 'axios';
 
 
 const MyItemEntry = (props) => {
@@ -14,8 +15,9 @@ const MyItemsView = (props) => {
     const fetchMyItems = async () => {
         try{
             let searchUri = `${props.baseUri}/items/search?type=seller&keyword=${props.userId}`;
-            const items = await fetch(searchUri);
-            console.log("my items", items);
+            let items = await axios.get(searchUri);
+            items = items.data;
+            setMyItems(items);
         }
         catch(err){
             console.log(err);
@@ -28,8 +30,7 @@ const MyItemsView = (props) => {
     return (<React.Fragment>
             <CustomHeader title='My items' backgroundColor="#d9d9d9"/>
             <ScrollView style={style.container}>
-                <Text>My items</Text>
-                {myItems.map(item => <MyItemEntry item={item}/>)}
+                {myItems.length > 0 ? myItems.map(item => <MyItemEntry item={item}/>): <Text>You are not selling any items for now</Text>}
             </ScrollView>
         </React.Fragment>)
 }
