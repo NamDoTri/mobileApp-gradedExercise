@@ -26,7 +26,7 @@ const AddItemView = (props) => {
         let currentDate = new Date()
         let toSendObject = {
             datePosted: currentDate.toString(),
-            seller: props.sellerId,
+            seller: props.userId,
             ...item
         }
 

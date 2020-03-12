@@ -4,9 +4,12 @@ import CustomHeader from "../components/CustomHeader";
 import { createStackNavigator } from '@react-navigation/stack'
 import * as SecureStore from 'expo-secure-store'
 
+let jwtDecode = require('jwt-decode')
+
 import LoginView from '../components/user/LoginView'
 import RegisterView from '../components/user/RegisterView'
 import UserProfile from '../components/user/UserProfile'
+
 
 const Stack = createStackNavigator();
 const tokenName = "marketplaceAppAuth"
@@ -22,6 +25,10 @@ const ProfileView = props => {
                 setActiveJWT(res)
                 props.setActiveJWT(res)
                 props.setIsLoggedIn(true)
+                let decoded = jwtDecode(res)
+                props.setUserId(decoded.id)
+                props.setUsername(decoded.name)
+                console.log(decoded)
             }
         })
         .catch(e => {
