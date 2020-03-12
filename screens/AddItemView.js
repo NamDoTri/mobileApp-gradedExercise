@@ -18,36 +18,40 @@ const AddItemView = (props) => {
     });
     const [photo, setPhoto] = useState();
 
-    // useEffect(() => {
-    //     setItem({
-    //         images: [photo],
-    //         ...item
-    //     })
-    // }, [photo]);
-
     const inputChangeHandler = (text, id) => {
-        if(!item.datePosted || item.datePosted == ''){
-            let currentDate = new Date()
-            setItem({
-                datePosted: currentDate.toString(),
-                seller: props.sellerId,
-                images: [photo],
-                ...item,
-            })
-        }
         const nItem = {...item};
         nItem[id] = text;
         setItem(nItem);
     }
     const createNewItem = () => {
-        
-
         let toSend = new FormData();
-        console.log(item);
-        for (let i of Object.keys(item)){
-            toSend.append(i, item[i])
+        let currentDate = new Date()
+        let toSendObject = {
+            datePosted: currentDate.toString(),
+            seller: props.sellerId,
+            images: [photo],
+            ...item
         }
-        //console.log(toSend)
+        for (let i of Object.keys(toSendObject)){
+            toSend.append(i, toSendObject[i])
+        }
+        
+        fetch(`${props.baseUri}/items`, {
+            method: "post",
+            headers: {
+                "Authorization": "JWT " + props.activeJWT
+            },
+            body: JSON.stringify(toSend),
+
+        })
+        .then(res => {
+            if(res.status == 202){
+                console.log("New item uploaded successfully")
+            }else{
+                console.log(res)
+            }
+        })
+        .catch(e => console.log(e))
     }
     const handleChoosePhoto = async () => {
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);

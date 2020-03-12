@@ -56,6 +56,7 @@ export default function App() {
 							{props => <AddItemView
 								baseUri={baseUri}
 								sellerId={sellerId}
+								activeJWT={activeJWT}
 							/>}
 					</Tab.Screen>) : <></>
 				}
