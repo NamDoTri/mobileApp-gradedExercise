@@ -14,9 +14,12 @@ import UserProfile from '../components/user/UserProfile'
 const Stack = createStackNavigator();
 const tokenName = "marketplaceAppAuth"
 
+
+
 const ProfileView = props => {
     const baseUri = props.baseUri;
-    const [activeJWT, setActiveJWT] = useState(null)
+    const [activeJWT, setActiveJWT] = useState(null);
+    
 
     useEffect(() => {
         SecureStore.getItemAsync(tokenName)

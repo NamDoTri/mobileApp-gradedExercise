@@ -15,6 +15,8 @@ const AddItemView = (props) => {
         deliveryType: 'Shipping',
     });
     const [photo, setPhoto] = useState();
+    const [submitting, setSubmitting] = useState(false);
+    const [created, setCreated] = useState(false);
 
     const inputChangeHandler = (text, id) => {
         const nItem = {...item};
@@ -25,7 +27,7 @@ const AddItemView = (props) => {
         // metadata
         let currentDate = new Date()
         let toSendObject = {
-            datePosted: currentDate.toString(),
+            dateOfPosting: currentDate.toString(),
             seller: props.userId,
             ...item
         }
@@ -48,6 +50,7 @@ const AddItemView = (props) => {
         headers.append("Content-Type", "multipart/form-data");
         headers.append("Authorization", props.activeJWT);
 
+        setSubmitting(true);
         // send post request
         fetch(`${props.baseUri}/items`, {
             method: "post",
@@ -63,18 +66,24 @@ const AddItemView = (props) => {
                 return res.text()
             }
         })
-        .then(json => [
-            console.log("JSON: " + json)
-        ])
-        .catch(e => console.log("Error: " + e))
+        .then(json => {
+            console.log("JSON: " , json)
+            setCreated(true);
+
+        })
+        .catch(e => {
+            setCreated(false);
+            setSubmitting(false);
+            console.log("Error: " , e);
+        })
     }
     
     const handleChoosePhoto = async () => {
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-        if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
-            return;
-        }
+        // if (status !== 'granted') {
+        //     alert('Sorry, we need camera roll permissions to make this work!');
+        //     return;
+        // }
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -99,6 +108,7 @@ const AddItemView = (props) => {
         })
     };
 
+    const submitComponent = submitting ? created ? <Text>Item created</Text>: <Text>Creating ...</Text>: <Button title="Submit" style={style.submitButton} onPress={createNewItem}/>
     return (
         <React.Fragment>
             <CustomHeader title='Sell' backgroundColor="#d9d9d9"/>
@@ -130,11 +140,11 @@ const AddItemView = (props) => {
                 <View style={style.inputA}>
                 {photo? <Image
             source={{ uri: photo ?photo.uri : ''}}
-            style={{ width: 300, height: 300 , visibility: photo? 'visibile' : 'gone'}}
+            style={{width: 300, height: 300}}
           /> :  <Button title="Choose Photo" onPress={handleChoosePhoto} />}
                    
                 </View>
-                <Button title="Submit" style={style.submitButton} onPress={createNewItem}/>
+                {submitComponent}
 
             </ScrollView>
         </React.Fragment>

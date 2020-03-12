@@ -19,6 +19,7 @@ const HomeView = () => {
             }});
             console.log(its.data.items[0]);
             setItems(its.data.items);
+            console.log(its.data.items);
         }
         catch(err){
             setError(err);
