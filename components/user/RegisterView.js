@@ -40,27 +40,32 @@ const RegisterView = props => {
         })
     }
 
+    const component = errors.length > 1 ? (errors.map(error => <Text>{error}</Text>)) : 
+
+    (<View><Text>Email</Text>
+    <TextInput
+        value={email}
+        onChange={e => setEmail(e.nativeEvent.text)}
+    />
+    <Text>Username</Text>
+    <TextInput
+        value={username}
+        onChange={e => setUsername(e.nativeEvent.text)}
+    />
+    <Text>Password</Text>
+    <TextInput
+        value={password}
+        onChange={e => setPassword(e.nativeEvent.text)}
+    />
+    <Button
+        title="Register"
+        onPress={handleRegister}
+    /></View>);
     return (
         <View>
-            {errors.length > 1 ? errors.map(error => <Text>error</Text>): <Text>Email</Text>
-            <TextInput
-                value={email}
-                onChange={e => setEmail(e.nativeEvent.text)}
-            />
-            <Text>Username</Text>
-            <TextInput
-                value={username}
-                onChange={e => setUsername(e.nativeEvent.text)}
-            />
-            <Text>Password</Text>
-            <TextInput
-                value={password}
-                onChange={e => setPassword(e.nativeEvent.text)}
-            />
-            <Button
-                title="Register"
-                onPress={handleRegister}
-            />}
+            {
+                component
+            }
         </View>
     )
 }
