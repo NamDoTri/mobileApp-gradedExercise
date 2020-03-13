@@ -30,7 +30,7 @@ const MyItemsView = (props) => {
     return (<React.Fragment>
             <CustomHeader title='My items' backgroundColor="#d9d9d9"/>
             <ScrollView style={style.container}>
-                {myItems.length > 0 ? myItems.map(item => <MyItemEntry item={item}/>): <Text>You are not selling any items for now</Text>}
+                {myItems.length > 0 ? myItems.map(item => <MyItemEntry key={item._id} item={item}/>): <Text>You are not selling any items for now</Text>}
             </ScrollView>
         </React.Fragment>)
 }
