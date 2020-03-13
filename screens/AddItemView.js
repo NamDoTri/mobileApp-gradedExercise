@@ -60,11 +60,9 @@ const AddItemView = (props) => {
                 .then(res2 => {
                     console.log(res2.data);
                     setCreated(true);
-                    setSubmitting(false);
                 })
                 .catch(e => {
                     setCreated(false);
-                    setSubmitting(false);
                     console.log("Error: " , e);
                 })
 
