@@ -89,7 +89,6 @@ const AddItemView = (props) => {
         if (!result.cancelled) {
 
             const convertedFile = `data:image/jpg;base64,${result.base64}`;
-            console.log(convertedFile);
             setPhoto({file: convertedFile, "upload_preset": "tjgpygf3"});
             console.log("selected image", result.uri);
             return;
