@@ -8,7 +8,7 @@ import axios from 'axios';
 const cloudinaryUrl = "https://api.cloudinary.com/v1_1/pbenipal61/upload"
 
 const AddItemView = (props) => {
-    const [item, setItem] = useState({});
+    const [item, setItem] = useState({deliveryType: 'Delivery'});
     const [photo, setPhoto] = useState();
     const [photoUri, setPhotoUri] = useState("");
     const [submitting, setSubmitting] = useState(false);
@@ -118,11 +118,11 @@ const AddItemView = (props) => {
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Category</Text>
-                <TextInput placeholder="category for the item" onChangeText={(text) => {inputChangeHandler(text, "category")}}></TextInput>
+                <TextInput multiline={true} placeholder="category for the item" onChangeText={(text) => {inputChangeHandler(text, "category")}}></TextInput>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Price</Text>
-                <TextInput placeholder="price for the item" onChangeText={(text) => {inputChangeHandler(text, "askingPrice")}}></TextInput>
+                <TextInput keyboardType={'numeric'} placeholder="price for the item" onChangeText={(text) => {inputChangeHandler(text, "askingPrice")}}></TextInput>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Type</Text>
