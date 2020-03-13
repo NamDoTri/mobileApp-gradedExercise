@@ -8,7 +8,7 @@ import axios from 'axios';
 const cloudinaryUrl = "https://api.cloudinary.com/v1_1/pbenipal61/upload"
 
 const AddItemView = (props) => {
-    const [item, setItem] = useState({deliveryType: 'Delivery'});
+    const [item, setItem] = useState({deliveryType: 'Shipping'});
     const [photo, setPhoto] = useState();
     const [photoUri, setPhotoUri] = useState("");
     const [submitting, setSubmitting] = useState(false);
@@ -126,7 +126,7 @@ const AddItemView = (props) => {
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Type</Text>
-                    <RadioForm radio_props={[{label: 'Delivery', value: 'Delivery'}, {label: 'Pickup', value: 'Pickup'}]} formHorizontal={true} labelHorizontal={true} initial={0} buttonColor={'#3b3c3c'} onPress={(value) => inputChangeHandler(value, 'deliveryType')}/>
+                    <RadioForm radio_props={[{label: 'Shipping', value: 'Shipping'}, {label: 'Pickup', value: 'Pickup'}]} formHorizontal={true} labelHorizontal={true} initial={0} buttonColor={'#3b3c3c'} onPress={(value) => inputChangeHandler(value, 'deliveryType')}/>
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Location</Text>
