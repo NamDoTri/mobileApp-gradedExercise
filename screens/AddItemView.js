@@ -10,6 +10,7 @@ const cloudinaryUrl = "https://api.cloudinary.com/v1_1/pbenipal61/upload"
 const AddItemView = (props) => {
     const [item, setItem] = useState({});
     const [photo, setPhoto] = useState();
+    const [photoUri, setPhotoUri] = useState("");
     const [submitting, setSubmitting] = useState(false);
     const [created, setCreated] = useState(false);
 
@@ -30,6 +31,7 @@ const AddItemView = (props) => {
         
         console.log("uploading image ...");
 
+        setSubmitting(true);
         fetch(cloudinaryUrl, {
             body: JSON.stringify(photo), 
             headers: {
@@ -57,6 +59,8 @@ const AddItemView = (props) => {
             })
                 .then(res2 => {
                     console.log(res2.data);
+                    setCreated(true);
+                    setSubmitting(false);
                 })
                 .catch(e => {
                     setCreated(false);
@@ -88,6 +92,7 @@ const AddItemView = (props) => {
     
         if (!result.cancelled) {
 
+            setPhotoUri(result.uri);
             const convertedFile = `data:image/jpg;base64,${result.base64}`;
             setPhoto({file: convertedFile, "upload_preset": "tjgpygf3"});
             console.log("selected image", result.uri);
@@ -129,7 +134,7 @@ const AddItemView = (props) => {
                 </View>
                 <View style={style.inputA}>
                 {photo? <Image
-            source={{ uri: photo ?photo.uri : ''}}
+            source={{ uri: photoUri ?photoUri : ''}}
             style={{width: 300, height: 300}}
           /> :  <Button title="Choose Photo" onPress={handleChoosePhoto} />}
                    
