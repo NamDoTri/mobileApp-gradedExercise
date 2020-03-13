@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native'
+import * as SecureStore from 'expo-secure-store'
+const tokenName = "marketplaceAppAuth";
 
 const LoginView = props => {
     const [email, setEmail] = useState("")
@@ -29,7 +31,8 @@ const LoginView = props => {
             }
         })
         .then(json => {
-            props.setActiveJWT(json.token)
+            props.setActiveJWT(json.token);
+            SecureStore.setItemAsync(tokenName, json.token).then().catch();
         })
         .catch(e => {
             console.log("HandleLogIn: " + e)

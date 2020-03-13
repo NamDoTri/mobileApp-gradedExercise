@@ -5,6 +5,7 @@ import RadioForm from 'react-native-simple-radio-button';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import axios from 'axios';
+const cloudinaryUrl = "https://api.cloudinary.com/v1_1/pbenipal61/upload"
 
 const AddItemView = (props) => {
     const [item, setItem] = useState({});
@@ -26,28 +27,49 @@ const AddItemView = (props) => {
         console.log("JWT", props.activeJWT);
         console.log("base uri", props.baseUri);
         console.log("user id", props.userId);
-        // metadata
-        const currentDate = Date.now();
-        const toSendObject = {
-            dateOfPosting: currentDate.toString(),
-            seller: props.userId,
-            ...item
-        }
+        
+        console.log("uploading image ...");
 
-        console.log("item", toSendObject);
-        setSubmitting(true);
-        // send post request
-        axios.post(`${props.baseUri}/items`, toSendObject, {
-            headers: {"Authorization": `${props.activeJWT}`, 'Content-Type': 'application/json'},
+        fetch(cloudinaryUrl, {
+            body: JSON.stringify(photo), 
+            headers: {
+            'content-type': 'application/json'
+            },
+          method: 'POST',
         })
-        .then(res => {
-            console.log(res.data);
+        .then(async res => {
+            // metadata
+            const data = await res.json();
+            console.log("url is", data.url);
+            const currentDate = Date.now();
+            const toSendObject = {
+                dateOfPosting: currentDate.toString(),
+                seller: props.userId,
+                images: data.url,
+                ...item
+            }
+
+            console.log("item", toSendObject);
+            setSubmitting(true);
+            // send post request
+            axios.post(`${props.baseUri}/items`, toSendObject, {
+                headers: {"Authorization": `${props.activeJWT}`, 'Content-Type': 'application/json'},
+            })
+                .then(res2 => {
+                    console.log(res2.data);
+                })
+                .catch(e => {
+                    setCreated(false);
+                    setSubmitting(false);
+                    console.log("Error: " , e);
+                })
+
         })
-        .catch(e => {
-            setCreated(false);
-            setSubmitting(false);
-            console.log("Error: " , e);
+        .catch(err => {
+            console.log("Failed to upload image or item", err);
         })
+
+
     }
     
     const handleChoosePhoto = async () => {
@@ -60,24 +82,21 @@ const AddItemView = (props) => {
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
-            quality: 1
+            quality: 1,
+            base64: true
         });
     
         if (!result.cancelled) {
-            setPhoto(result);
+
+            const convertedFile = `data:image/jpg;base64,${result.base64}`;
+            console.log(convertedFile);
+            setPhoto({file: convertedFile, "upload_preset": "tjgpygf3"});
+            console.log("selected image", result.uri);
             return;
         }
 
-        const fileName = result.uri.split('/').slice(-1)
-        setPhoto({
-            uri: result.uri,
-            name: fileName,
-            type: "image/jpeg"
-        })
-        setItem({
-            images: [photo],
-            ...item,
-        })
+        
+        
     };
 
     const submitComponent = submitting ? created ? <Text>Item created</Text>: <Text>Creating ...</Text>: <Button title="Submit" style={style.submitButton} onPress={createNewItem}/>

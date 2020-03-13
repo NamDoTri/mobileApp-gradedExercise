@@ -11,6 +11,7 @@ import MyItemsView from './screens/MyItemsView';
 
 const Tab = createBottomTabNavigator();
 const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008";
+// const baseUri = "81.175.152.229:3008"
 
 
 export default function App() {
