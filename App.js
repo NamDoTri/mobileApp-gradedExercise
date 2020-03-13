@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Entypo, FontAwesome } from 'react-native-vector-icons';
+import jwtDecode from 'jwt-decode';
 
 import HomeView from './screens/HomeView'
 import SearchView from './screens/SearchView'
@@ -28,6 +29,9 @@ export default function App() {
 
 			const jwt = await SecureStore.getItemAsync(tokenName);
 			setActiveJWT(jwt);
+			const jwtPayload = jwtDecode(jwt);
+			setUserId(jwtPayload.id);
+			setUsername(jwtPayload.name);
 			setIsLoggedIn(true);
 
 		}
