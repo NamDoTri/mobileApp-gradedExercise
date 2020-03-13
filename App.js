@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Entypo, FontAwesome } from 'react-native-vector-icons';
@@ -8,6 +8,8 @@ import SearchView from './screens/SearchView'
 import ProfileView from './screens/ProfileView'
 import AddItemView from "./screens/AddItemView";
 import MyItemsView from './screens/MyItemsView';
+import * as SecureStore from 'expo-secure-store'
+const tokenName = "marketplaceAppAuth";
 
 const Tab = createBottomTabNavigator();
 const baseUri = "http://ec2-18-195-169-254.eu-central-1.compute.amazonaws.com:3008";
@@ -20,9 +22,24 @@ export default function App() {
 	const [username, setUsername] = useState("");
 	const [userId, setUserId] = useState("")
 
-	const handleLogin = value => {
-		setIsLoggedIn(value)
+	const handleLogin = async value => {
+
+		try{
+
+			const jwt = await SecureStore.getItemAsync(tokenName);
+			setActiveJWT(jwt);
+			setIsLoggedIn(true);
+
+		}
+		catch(err){
+			console.log("Error in getting present jwt", err)
+		}
+
 	}
+
+	useEffect(()=> {
+		handleLogin();
+	}, [])
 
 	return (
 		<NavigationContainer>
