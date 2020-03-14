@@ -14,6 +14,8 @@ const SearchView = props => {
     const [dateItems, setDateItems] = useState([]);
     const [keyword, setKeyword] = useState("");
     const searchTypes = ["Category", "Location", "dateOfPosting"]
+    const username = props.username;
+    const userId = props.userId;
     
     useEffect(() => {
 
@@ -71,6 +73,8 @@ const SearchView = props => {
                             itemsByCategory={categoryItems}
                             itemsByLocation={locationItems}
                             itemsByDate={dateItems}
+                            username={username}
+                            userId={userId}
                         />
                         </>
                     )}

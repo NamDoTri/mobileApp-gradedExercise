@@ -1,10 +1,21 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, Image, StyleSheet, Dimensions, Button } from 'react-native'
 
 // TODO: get seller name somehow
 
 const ProductView = props => {
     const [item, setItem] = useState(props.route.params.item)
+    const user = {
+        name: props.route.params.username,
+        id: props.route.params.userId
+    }
+    const onEditPressed = () => {
+
+    }
+
+    const onDeletePressed = () => {
+
+    }
 
     return (
         <View>
@@ -24,6 +35,22 @@ const ProductView = props => {
                 <Text><Text style={styles.bulletPoint}>Description:</Text> {item.description}</Text>
                 <Text><Text style={styles.bulletPoint}>Posted at: </Text> {item.datePosted}</Text>
             </View>
+            {user.id==item.seller ?
+                <View style={styles.modifyingButtons}>
+                    <Button 
+                        title="Edit"
+                        style={{flex: 1}}
+                        onPress={onEditPressed}
+                    />
+                    <Button 
+                        title="Delete"
+                        style={{flex: 1}}
+                        onPress={onDeletePressed}
+                    />
+                </View>
+                :
+                <></>
+            }
         </View>
     )
 }
@@ -64,5 +91,8 @@ const styles = StyleSheet.create({
     },
     deliveryType: {
         color: "blue"
+    },
+    modifyingButtons: {
+        flexDirection: "row",
     }
 })

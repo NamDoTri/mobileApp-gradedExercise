@@ -15,6 +15,8 @@ const SearchTypeTab = props => {
                         <SearchResults
                             {...props}
                             items={props.itemsByCategory}
+                            username={props.username}
+                            userId={props.userId}
                         />
                     )}
                 </Tab.Screen>
@@ -23,6 +25,8 @@ const SearchTypeTab = props => {
                         <SearchResults
                             {...props}
                             items={props.itemsByLocation}
+                            username={props.username}
+                            userId={props.userId}
                         />
                     )}
                 </Tab.Screen>
@@ -31,6 +35,8 @@ const SearchTypeTab = props => {
                         <SearchResults
                             {...props}
                             items={props.itemsByDate}
+                            username={props.username}
+                            userId={props.userId}
                         />
                     )}
                 </Tab.Screen>
