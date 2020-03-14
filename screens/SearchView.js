@@ -37,7 +37,8 @@ const SearchView = props => {
                 })
                 .catch(e => console.log("SearchView: " + e))
             }
-            let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
+            let searchUri = `${props.baseUri}/items/search?type=${type.toLowerCase()}&keyword=${keyword}`;
+            console.log(searchUri)
             fetch(searchUri)
                 .then(res => {
                     return res.json();
