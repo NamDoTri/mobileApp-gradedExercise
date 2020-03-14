@@ -12,7 +12,7 @@ import UserProfile from '../components/user/UserProfile'
 
 
 const Stack = createStackNavigator();
-const tokenName = "marketplaceAppAuth"
+const tokenName = "marketplaceAppAuth";
 
 
 
@@ -38,7 +38,7 @@ const ProfileView = props => {
             console.log(e)
         })
         SecureStore.setItemAsync(tokenName, activeJWT)
-    }, [activeJWT])
+    }, [])
 
     const setIsLoggedIn = value => props.setIsLoggedIn(value)
 
