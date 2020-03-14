@@ -69,6 +69,7 @@ export default function App() {
 							baseUri={baseUri}
 							userId={userId}
 							username={username}
+                            activeJWT={activeJWT}
 						/>}
 				</Tab.Screen>
 				{ isLoggedIn==true ? 

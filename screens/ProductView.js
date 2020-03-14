@@ -5,16 +5,38 @@ import { View, Text, Image, StyleSheet, Dimensions, Button } from 'react-native'
 
 const ProductView = props => {
     const [item, setItem] = useState(props.route.params.item)
+    const baseUri = props.route.params.baseUri;
+    const activeJWT = props.route.params.activeJWT;
     const user = {
         name: props.route.params.username,
         id: props.route.params.userId
     }
     const onEditPressed = () => {
-
+        console.log(props)
     }
 
     const onDeletePressed = () => {
-
+        fetch(`${baseUri}/items/${item._id}`, {
+            method: "delete",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization": activeJWT
+            }
+        })
+        .then(res => {
+            if(res.status == 202){
+                alert("Delete item successfully")
+                props.navigation.goBack()
+            }else{
+                alert("Delete item unsuccessfully")
+                console.log(res.text())
+            }
+            return res.json()
+        })
+        .then(json => {
+            console.log(json)
+        })
+        .catch(e => console.log(e))
     }
 
     return (

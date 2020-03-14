@@ -6,7 +6,6 @@ import SearchResults from './SearchResults';
 const Tab = createMaterialTopTabNavigator()
 
 const SearchTypeTab = props => {
-    // the items are passed to here successfully
     return (
         <View style={{flex: 1}}>
             <Tab.Navigator >
@@ -17,6 +16,8 @@ const SearchTypeTab = props => {
                             items={props.itemsByCategory}
                             username={props.username}
                             userId={props.userId}
+                            baseUri={props.baseUri}
+                            activeJWT={props.activeJWT}
                         />
                     )}
                 </Tab.Screen>
@@ -27,6 +28,8 @@ const SearchTypeTab = props => {
                             items={props.itemsByLocation}
                             username={props.username}
                             userId={props.userId}
+                            baseUri={props.baseUri}
+                            activeJWT={props.activeJWT}
                         />
                     )}
                 </Tab.Screen>
@@ -37,6 +40,8 @@ const SearchTypeTab = props => {
                             items={props.itemsByDate}
                             username={props.username}
                             userId={props.userId}
+                            baseUri={props.baseUri}
+                            activeJWT={props.activeJWT}
                         />
                     )}
                 </Tab.Screen>

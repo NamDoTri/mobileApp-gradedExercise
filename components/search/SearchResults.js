@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Text, FlatList, TouchableOpacity } from 'react-native'
 import ProductCompact from './ProductCompact'
 
@@ -7,7 +7,9 @@ const SearchResults = props => {
         const data = {
             item: item, 
             username: props.username,
-            userId: props.userId
+            userId: props.userId, 
+            activeJWT: props.activeJWT,
+            baseUri: props.baseUri
         }
         props.navigation.navigate("ProductDetail", data)
     }
