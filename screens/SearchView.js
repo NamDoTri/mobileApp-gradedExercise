@@ -13,19 +13,25 @@ const SearchView = props => {
     const [locationItems, setLocationItems] = useState([]);
     const [dateItems, setDateItems] = useState([]);
     const [keyword, setKeyword] = useState("");
-    const searchTypes = ["Category", "Location", "Date"]
+    const searchTypes = ["Category", "Location", "dateOfPosting"]
     
     useEffect(() => {
+
+        const dateFormat = /\d\d\/\d\d\/\d\d\d\d/ // mm/dd/yyyy
+
         for (let type of searchTypes){
-            if(type == "Date"){
+            if(type == "dateOfPosting" && dateFormat.test(keyword)==true ){
                 let searchDate = new Date(keyword);
-                fetch(`${props.baseUri}/items/search?type=${type}&keyword=${searchDate.toString().slice(0, 15)}`)
+                console.log("Search date: " + searchDate.toString().slice(0, 15))
+                let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${searchDate.toString().slice(0, 15)}`.replace(/\s/g, '%20');
+                console.log(searchUri)
+                fetch(searchUri)
                 .then(res => {
                     return res.json();
                 })
                 .then(json => {
                     console.log(json)
-                    eval(`set${type}Items(json)`);
+                    eval(`setDateItems(json)`);
                 })
                 .catch(e => console.log("SearchView: " + e))
             }

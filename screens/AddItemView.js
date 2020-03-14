@@ -43,9 +43,9 @@ const AddItemView = (props) => {
             // metadata
             const data = await res.json();
             console.log("url is", data.url);
-            const currentDate = Date.now();
+            const currentDate = new Date();
             const toSendObject = {
-                dateOfPosting: currentDate.toString(),
+                dateOfPosting: currentDate.toString().slice(0, 15),
                 seller: props.userId,
                 images: data.url,
                 ...item
