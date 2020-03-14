@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView} from 'react-native';
+import React, { useState, useEffect} from 'react'
+import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView, Alert} from 'react-native';
 import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
 import * as ImagePicker from 'expo-image-picker';
@@ -102,7 +102,13 @@ const EditItem = props => {
         }
     };
 
-    const submitComponent = submitting ? created ? <Text>Item created</Text>: <Text>Creating ...</Text>: <Button title="Submit" style={style.submitButton} onPress={editItem}/>
+    useEffect(() => {
+        if(created==true){
+            Alert.alert("Marketplace", "Item editted successfully!")
+        }
+    }, [created])
+
+    const submitComponent = submitting ? created ? <></>: <></>: <Button title="Submit" style={style.submitButton} onPress={editItem}/>
     return (
         <React.Fragment>
             <CustomHeader title='Sell' backgroundColor="#d9d9d9"/>
