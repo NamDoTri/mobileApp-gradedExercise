@@ -17,17 +17,16 @@ const SearchView = props => {
     const searchTypes = ["Category", "Location", "dateOfPosting"]
     const username = props.username;
     const userId = props.userId;
+    const baseUri = props.baseUri
+    const activeJWT = props.activeJWT
     
     useEffect(() => {
-
         const dateFormat = /\d\d\/\d\d\/\d\d\d\d/ // mm/dd/yyyy
 
         for (let type of searchTypes){
             if(type == "dateOfPosting" && dateFormat.test(keyword)==true ){
                 let searchDate = new Date(keyword);
-                console.log("Search date: " + searchDate.toString().slice(0, 15))
                 let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${searchDate.toString().slice(0, 15)}`.replace(/\s/g, '%20');
-                console.log(searchUri)
                 fetch(searchUri)
                 .then(res => {
                     return res.json();
@@ -39,7 +38,6 @@ const SearchView = props => {
                 .catch(e => console.log("SearchView: " + e))
             }
             let searchUri = `${props.baseUri}/items/search?type=${type.toLowerCase()}&keyword=${keyword}`;
-            console.log(searchUri)
             fetch(searchUri)
                 .then(res => {
                     return res.json();
@@ -77,6 +75,8 @@ const SearchView = props => {
                             itemsByDate={dateItems}
                             username={username}
                             userId={userId}
+                            baseUri={baseUri}
+                            activeJWT={activeJWT}
                         />
                         </>
                     )}

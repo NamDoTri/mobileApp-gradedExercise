@@ -30,9 +30,9 @@ const EditItem = props => {
     }
     const editItem = () => {
 
-        console.log("JWT", props.activeJWT);
-        console.log("base uri", props.baseUri);
-        console.log("user id", props.userId);
+        console.log("JWT", activeJWT);
+        console.log("base uri", baseUri);
+        console.log("user id", user.id);
         
         console.log("uploading image ...");
 
@@ -48,9 +48,8 @@ const EditItem = props => {
             // metadata
             const data = await res.json();
             console.log("url is", data.url);
-            const currentDate = new Date();
             const toSendObject = {
-                dateOfPosting: currentDate.toString().slice(0, 15),
+                dateOfPosting: item.dateOfPosting,
                 seller: props.userId,
                 images: data.url,
                 ...item
@@ -59,8 +58,8 @@ const EditItem = props => {
             console.log("item", toSendObject);
             setSubmitting(true);
             // send post request
-            axios.post(`${props.baseUri}/items`, toSendObject, {
-                headers: {"Authorization": `${props.activeJWT}`, 'Content-Type': 'application/json'},
+            axios.put(`${baseUri}/items/${item._id}`, toSendObject, {
+                headers: {"Authorization": `${activeJWT}`, 'Content-Type': 'application/json'},
             })
                 .then(res2 => {
                     console.log(res2.data);

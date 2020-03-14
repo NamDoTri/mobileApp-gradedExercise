@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import SearchResults from './SearchResults';
@@ -6,6 +6,7 @@ import SearchResults from './SearchResults';
 const Tab = createMaterialTopTabNavigator()
 
 const SearchTypeTab = props => {
+    //jwt passed to here
     return (
         <View style={{flex: 1}}>
             <Tab.Navigator >
