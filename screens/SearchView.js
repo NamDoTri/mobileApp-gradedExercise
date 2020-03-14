@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import SearchBox from '../components/search/SearchBox'
 import SearchTypeTab from '../components/search/SearchTypeTab'
 import ProductView from '../screens/ProductView'
+import EditItem from './EditItem'
 
 const Stack = createStackNavigator();
 
@@ -83,6 +84,10 @@ const SearchView = props => {
                 <Stack.Screen
                     name="ProductDetail"
                     component={ProductView}
+                />
+                <Stack.Screen 
+                    name="EditItem"
+                    component={EditItem}
                 />
             </Stack.Navigator>
         </View>

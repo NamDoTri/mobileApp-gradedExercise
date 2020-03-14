@@ -12,7 +12,12 @@ const ProductView = props => {
         id: props.route.params.userId
     }
     const onEditPressed = () => {
-        console.log(props)
+        const data = {
+            item: item,
+            baseUri: baseUri,
+            activeJWT: activeJWT
+        }
+        props.navigation.navigate("EditItem", data)
     }
 
     const onDeletePressed = () => {
