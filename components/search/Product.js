@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text, Image, Button, ScrollView } from 'react-native'
 
 const Product = (props) => {
-    const {category, datePosted, deliveryType, description, images, location, price, sellerName, title, _id} = props.data;
+    const {category, dateOfPosting, deliveryType, description, images, location, price, sellerName, title, _id} = props.data;
     const getReadableDate = (dateString) => {
         const d = new Date(dateString);
         return `${d.toDateString()}`;
@@ -26,7 +26,7 @@ const Product = (props) => {
             <View>
         
         <View  style={style.itemEntryTopView}><Text style={{fontSize: 16}}>{description}</Text></View>
-        <View style={style.itemEntryMiddleView2}><Text style={{fontSize: 16}}>{getReadableDate(datePosted)}</Text></View>
+        <View style={style.itemEntryMiddleView2}><Text style={{fontSize: 16}}>{getReadableDate(dateOfPosting)}</Text></View>
         </View>
         <View style={{display: 'flex', flexDirection: 'column'}}>
         <View><Text style={style.priceText}>{`${price ? price + ' euros': ''}`}</Text></View>
