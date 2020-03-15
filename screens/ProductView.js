@@ -1,10 +1,48 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, Image, StyleSheet, Dimensions, Button } from 'react-native'
 
 // TODO: get seller name somehow
 
 const ProductView = props => {
     const [item, setItem] = useState(props.route.params.item)
+    const baseUri = props.route.params.baseUri;
+    const activeJWT = props.route.params.activeJWT;
+    const user = {
+        name: props.route.params.username,
+        id: props.route.params.userId
+    }
+    const onEditPressed = () => {
+        const data = {
+            item: item,
+            baseUri: baseUri,
+            activeJWT: activeJWT
+        }
+        props.navigation.navigate("EditItem", data)
+    }
+
+    const onDeletePressed = () => {
+        fetch(`${baseUri}/items/${item._id}`, {
+            method: "delete",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization": activeJWT
+            }
+        })
+        .then(res => {
+            if(res.status == 202){
+                alert("Delete item successfully")
+                props.navigation.goBack()
+            }else{
+                alert("Delete item unsuccessfully")
+                console.log(res.text())
+            }
+            return res.json()
+        })
+        .then(json => {
+            console.log(json)
+        })
+        .catch(e => console.log(e))
+    }
 
     return (
         <View>
@@ -24,6 +62,22 @@ const ProductView = props => {
                 <Text><Text style={styles.bulletPoint}>Description:</Text> {item.description}</Text>
                 <Text><Text style={styles.bulletPoint}>Posted at: </Text> {item.datePosted}</Text>
             </View>
+            {user.id==item.seller ?
+                <View style={styles.modifyingButtons}>
+                    <Button 
+                        title="Edit"
+                        style={{flex: 1}}
+                        onPress={onEditPressed}
+                    />
+                    <Button 
+                        title="Delete"
+                        style={{flex: 1}}
+                        onPress={onDeletePressed}
+                    />
+                </View>
+                :
+                <></>
+            }
         </View>
     )
 }
@@ -64,5 +118,8 @@ const styles = StyleSheet.create({
     },
     deliveryType: {
         color: "blue"
+    },
+    modifyingButtons: {
+        flexDirection: "row",
     }
 })

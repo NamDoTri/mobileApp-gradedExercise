@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import SearchResults from './SearchResults';
@@ -6,7 +6,7 @@ import SearchResults from './SearchResults';
 const Tab = createMaterialTopTabNavigator()
 
 const SearchTypeTab = props => {
-    // the items are passed to here successfully
+    //jwt passed to here
     return (
         <View style={{flex: 1}}>
             <Tab.Navigator >
@@ -15,6 +15,10 @@ const SearchTypeTab = props => {
                         <SearchResults
                             {...props}
                             items={props.itemsByCategory}
+                            username={props.username}
+                            userId={props.userId}
+                            baseUri={props.baseUri}
+                            activeJWT={props.activeJWT}
                         />
                     )}
                 </Tab.Screen>
@@ -23,6 +27,10 @@ const SearchTypeTab = props => {
                         <SearchResults
                             {...props}
                             items={props.itemsByLocation}
+                            username={props.username}
+                            userId={props.userId}
+                            baseUri={props.baseUri}
+                            activeJWT={props.activeJWT}
                         />
                     )}
                 </Tab.Screen>
@@ -31,6 +39,10 @@ const SearchTypeTab = props => {
                         <SearchResults
                             {...props}
                             items={props.itemsByDate}
+                            username={props.username}
+                            userId={props.userId}
+                            baseUri={props.baseUri}
+                            activeJWT={props.activeJWT}
                         />
                     )}
                 </Tab.Screen>

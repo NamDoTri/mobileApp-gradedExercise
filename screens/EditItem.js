@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react'
 import {View, StyleSheet, Text, TextInput, Button, Image, ScrollView, Alert} from 'react-native';
 import CustomHeader from "../components/CustomHeader";
 import RadioForm from 'react-native-simple-radio-button';
@@ -7,19 +7,18 @@ import * as Permissions from 'expo-permissions';
 import axios from 'axios';
 const cloudinaryUrl = "https://api.cloudinary.com/v1_1/pbenipal61/upload"
 
-const AddItemView = (props) => {
-    const [item, setItem] = useState({deliveryType: 'Shipping'});
+const EditItem = props => {
+    const [item, setItem] = useState(props.route.params.item);
     const [photo, setPhoto] = useState();
     const [photoUri, setPhotoUri] = useState("");
     const [submitting, setSubmitting] = useState(false);
     const [created, setCreated] = useState(false);
-
-    useEffect(() => {
-        if(created==true){
-            Alert.alert("Marketplace", "New item posted successfully!")
-        }
-    }, [created])
-
+    const baseUri = props.route.params.baseUri;
+    const activeJWT = props.route.params.activeJWT;
+    const user = {
+        name: props.route.params.username,
+        id: props.route.params.userId
+    }
     const inputChangeHandler = (text, id) => {
         const nItem = {...item};
         nItem[id] = text;
@@ -29,11 +28,11 @@ const AddItemView = (props) => {
         console.log(nItem);
         setItem(nItem);
     }
-    const createNewItem = () => {
+    const editItem = () => {
 
-        console.log("JWT", props.activeJWT);
-        console.log("base uri", props.baseUri);
-        console.log("user id", props.userId);
+        console.log("JWT", activeJWT);
+        console.log("base uri", baseUri);
+        console.log("user id", user.id);
         
         console.log("uploading image ...");
 
@@ -49,9 +48,8 @@ const AddItemView = (props) => {
             // metadata
             const data = await res.json();
             console.log("url is", data.url);
-            const currentDate = new Date();
             const toSendObject = {
-                dateOfPosting: currentDate.toString().slice(0, 15),
+                dateOfPosting: item.dateOfPosting,
                 seller: props.userId,
                 images: data.url,
                 ...item
@@ -60,8 +58,8 @@ const AddItemView = (props) => {
             console.log("item", toSendObject);
             setSubmitting(true);
             // send post request
-            axios.post(`${props.baseUri}/items`, toSendObject, {
-                headers: {"Authorization": `${props.activeJWT}`, 'Content-Type': 'application/json'},
+            axios.put(`${baseUri}/items/${item._id}`, toSendObject, {
+                headers: {"Authorization": `${activeJWT}`, 'Content-Type': 'application/json'},
             })
                 .then(res2 => {
                     console.log(res2.data);
@@ -102,31 +100,52 @@ const AddItemView = (props) => {
             console.log("selected image", result.uri);
             return;
         }
-
-        
-        
     };
 
-    const submitComponent = submitting ? created ? <></>: <></>: <Button title="Submit" style={style.submitButton} onPress={createNewItem}/>
+    useEffect(() => {
+        if(created==true){
+            Alert.alert("Marketplace", "Item editted successfully!")
+        }
+    }, [created])
+
+    const submitComponent = submitting ? created ? <></>: <></>: <Button title="Submit" style={style.submitButton} onPress={editItem}/>
     return (
         <React.Fragment>
             <CustomHeader title='Sell' backgroundColor="#d9d9d9"/>
             <ScrollView style={style.container}>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Name</Text>
-                <TextInput placeholder="name of the item" onChangeText={(text) => {inputChangeHandler(text, "title")}}></TextInput>
+                    <TextInput 
+                        placeholder="name of the item" 
+                        onChangeText={(text) => {inputChangeHandler(text, "title")}}
+                        value={item.title}
+                    />
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Description</Text>
-                <TextInput placeholder="description" onChangeText={(text) => {inputChangeHandler(text, "description")}}></TextInput>
+                    <TextInput 
+                        placeholder="description" 
+                        onChangeText={(text) => {inputChangeHandler(text, "description")}}
+                        value={item.description}
+                    />
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Category</Text>
-                <TextInput multiline={true} placeholder="category for the item" onChangeText={(text) => {inputChangeHandler(text, "category")}}></TextInput>
+                    <TextInput 
+                        multiline={true} 
+                        placeholder="category for the item" 
+                        onChangeText={(text) => {inputChangeHandler(text, "category")}}
+                        value={item.category}
+                    />
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Price</Text>
-                <TextInput keyboardType={'numeric'} placeholder="price for the item" onChangeText={(text) => {inputChangeHandler(text, "askingPrice")}}></TextInput>
+                    <TextInput
+                        keyboardType={'numeric'} 
+                        placeholder="price for the item" 
+                        onChangeText={(text) => {inputChangeHandler(text, "askingPrice")}}
+                        value={item.askingPrice}
+                    />
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Type</Text>
@@ -134,13 +153,15 @@ const AddItemView = (props) => {
                 </View>
                 <View style={style.inputA}>
                     <Text style={style.textA}>Location</Text>
-                <TextInput placeholder="location of the item" onChangeText={(text) => {inputChangeHandler(text, "location")}}></TextInput>
+                    <TextInput placeholder="location of the item" onChangeText={(text) => {inputChangeHandler(text, "location")}} value={item.location}></TextInput>
                 </View>
                 <View style={style.inputA}>
-                {photo? <Image
-            source={{ uri: photoUri ?photoUri : ''}}
-            style={{width: 300, height: 300}}
-          /> :  <Button title="Choose Photo" onPress={handleChoosePhoto} />}
+                {photo? 
+                    <Image
+                        source={{ uri: photoUri ?photoUri : ''}}
+                        style={{width: 300, height: 300}}/>
+                    :  
+                    <Button title="Choose Photo" onPress={handleChoosePhoto} />}
                    
                 </View>
                 {submitComponent}
@@ -184,4 +205,4 @@ const style = StyleSheet.create({
     }
 });
 
-export default AddItemView;
+export default EditItem

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 const MyItemEntry = (props) => {
-    return <View><Text>{props.item.name}</Text></View>
+    return <View style={{height: 50}}><Text style={{fontSize: 20}}>{props.item.title}</Text></View>
     }
 
 
@@ -27,12 +27,15 @@ const MyItemsView = (props) => {
        fetchMyItems();
     },[])
 
-    return (<React.Fragment>
-            <CustomHeader title='My items' backgroundColor="#d9d9d9"/>
-            <ScrollView style={style.container}>
+    return (
+        <>
+        <CustomHeader title='My items' backgroundColor="#d9d9d9" style={{flex: 1}} />
+        <View style={style.container}>
+            <ScrollView  contentContainerStyle={{flex: 1}}>
                 {myItems.length > 0 ? myItems.map(item => <MyItemEntry key={item._id} item={item}/>): <Text>You are not selling any items for now</Text>}
             </ScrollView>
-        </React.Fragment>)
+        </View>
+        </>)
 }
 
 
@@ -42,7 +45,8 @@ const style = StyleSheet.create({
         paddingTop: '2%',
         paddingLeft: '2%',
         backgroundColor: "#d9d9d9",
-        fontSize: 30
+        fontSize: 30,
+        
     },
     textA:{
         marginBottom: '2%',

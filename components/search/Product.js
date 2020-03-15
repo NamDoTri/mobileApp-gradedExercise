@@ -3,10 +3,7 @@ import { StyleSheet, View, Text, Image, Button, ScrollView } from 'react-native'
 
 const Product = (props) => {
     const {category, dateOfPosting, deliveryType, description, images, location, price, sellerName, title, _id} = props.data;
-    const getReadableDate = (dateString) => {
-        const d = new Date(dateString);
-        return `${d.toDateString()}`;
-    }
+
     return (<View style={style.itemEntryContainer}>
         <View style={style.itemEntryTopView}>
             <View style={style.titleTextsView}>
@@ -24,16 +21,14 @@ const Product = (props) => {
         <View style={style.itemEntryMiddleView}><Image source={{uri: images}} style={style.itemEntryImage}></Image></View>
         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
             <View>
-        
-        <View  style={style.itemEntryTopView}><Text style={{fontSize: 16}}>{description}</Text></View>
-        <View style={style.itemEntryMiddleView2}><Text style={{fontSize: 16}}>{getReadableDate(dateOfPosting)}</Text></View>
-        </View>
-        <View style={{display: 'flex', flexDirection: 'column'}}>
-        <View><Text style={style.priceText}>{`${price ? price + ' euros': ''}`}</Text></View>
-        <View style={style.itemEntryBottomView}><Button title={'Buy'} style={style.buyButton}></Button></View>
-        </View>
-        </View>
-       
+                <View  style={style.itemEntryTopView}><Text style={{fontSize: 16}}>{description}</Text></View>
+                <View style={style.itemEntryMiddleView2}><Text style={{fontSize: 16}}>{dateOfPosting}</Text></View>
+            </View>
+            <View style={{display: 'flex', flexDirection: 'column'}}>
+                <View><Text style={style.priceText}>{`${price ? price + ' euros': ''}`}</Text></View>
+                <View style={style.itemEntryBottomView}><Button title={'Buy'} style={style.buyButton}></Button></View>
+            </View>
+        </View>       
     </View>)
 }
 

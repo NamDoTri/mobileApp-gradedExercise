@@ -67,6 +67,9 @@ export default function App() {
 					}}>
 						{props => <SearchView
 							baseUri={baseUri}
+							userId={userId}
+							username={username}
+                            activeJWT={activeJWT}
 						/>}
 				</Tab.Screen>
 				{ isLoggedIn==true ? 

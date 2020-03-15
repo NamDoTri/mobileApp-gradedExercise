@@ -7,7 +7,7 @@ const SearchBox = props => {
             <TextInput
                 onSubmitEditing={(e) => props.handleSubmit(e.nativeEvent.text)}
                 onChange={e => props.handleSubmit(e.nativeEvent.text)}
-                placeholder="Search..."
+                placeholder="Search... (mm/dd/yyyy with date)"
             />
         </View>
     )

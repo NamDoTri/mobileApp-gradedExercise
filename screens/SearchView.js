@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import SearchBox from '../components/search/SearchBox'
 import SearchTypeTab from '../components/search/SearchTypeTab'
 import ProductView from '../screens/ProductView'
+import EditItem from './EditItem'
 
 const Stack = createStackNavigator();
 
@@ -13,23 +14,30 @@ const SearchView = props => {
     const [locationItems, setLocationItems] = useState([]);
     const [dateItems, setDateItems] = useState([]);
     const [keyword, setKeyword] = useState("");
-    const searchTypes = ["Category", "Location", "Date"]
+    const searchTypes = ["Category", "Location", "dateOfPosting"]
+    const username = props.username;
+    const userId = props.userId;
+    const baseUri = props.baseUri
+    const activeJWT = props.activeJWT
     
     useEffect(() => {
+        const dateFormat = /\d\d\/\d\d\/\d\d\d\d/ // mm/dd/yyyy
+
         for (let type of searchTypes){
-            if(type == "Date"){
+            if(type == "dateOfPosting" && dateFormat.test(keyword)==true ){
                 let searchDate = new Date(keyword);
-                fetch(`${props.baseUri}/items/search?type=${type}&keyword=${searchDate.toString().slice(0, 15)}`)
+                let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${searchDate.toString().slice(0, 15)}`.replace(/\s/g, '%20');
+                fetch(searchUri)
                 .then(res => {
                     return res.json();
                 })
                 .then(json => {
                     console.log(json)
-                    eval(`set${type}Items(json)`);
+                    eval(`setDateItems(json)`);
                 })
                 .catch(e => console.log("SearchView: " + e))
             }
-            let searchUri = `${props.baseUri}/items/search?type=${type}&keyword=${keyword}`;
+            let searchUri = `${props.baseUri}/items/search?type=${type.toLowerCase()}&keyword=${keyword}`;
             fetch(searchUri)
                 .then(res => {
                     return res.json();
@@ -65,6 +73,10 @@ const SearchView = props => {
                             itemsByCategory={categoryItems}
                             itemsByLocation={locationItems}
                             itemsByDate={dateItems}
+                            username={username}
+                            userId={userId}
+                            baseUri={baseUri}
+                            activeJWT={activeJWT}
                         />
                         </>
                     )}
@@ -72,6 +84,10 @@ const SearchView = props => {
                 <Stack.Screen
                     name="ProductDetail"
                     component={ProductView}
+                />
+                <Stack.Screen 
+                    name="EditItem"
+                    component={EditItem}
                 />
             </Stack.Navigator>
         </View>
