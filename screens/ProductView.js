@@ -49,7 +49,7 @@ const ProductView = props => {
             <Image
                 style={styles.images}
                 loadingIndicatorSource={require("../assets/default_item_placeholder.png")}
-                source={require("../assets/default_item_placeholder.png")}
+                source={{uri: item.images}}
             />
             <View style={styles.container}>
                 <View style={styles.brief}>
