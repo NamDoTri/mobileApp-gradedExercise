@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { View, Text, TextInput, Button } from 'react-native'
+import { View, Text, TextInput, Button, Alert } from 'react-native'
 
 const RegisterView = props => {
     const [email, setEmail] = useState("")
@@ -25,7 +25,7 @@ const RegisterView = props => {
                 return res.json();
             }
             else if( res.status == 200){
-                console.log("email already registered");
+                Alert.alert("Marketplace", "email already registered");
                 setErrors([...errors, 'Email already registered']);
             }
             else{
